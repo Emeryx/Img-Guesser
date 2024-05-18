@@ -1,12 +1,13 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Stack, Typography, Input, Button, Slider, Box } from '@mui/joy'
 import styles from '../assets/MuiStyles'
 const { headerFontSize, subheaderFontSize } = styles;
 import RoomCodeGenerator from "../assets/RoomCodeGenerator";
 const HostGame = () => {
     const navigate = useNavigate();
-    const startGame = () => navigate(`/r/${RoomCodeGenerator()}`)
+    const roomCode = useRef<string>(RoomCodeGenerator());
+    const startGame = () => navigate(`/r/${roomCode.current}`)
     const [timePerRound, setTimePerRound] = useState<number | number[]>(30);
     const [rounds, setRounds] = useState<number | number[]>(6);
     return (
