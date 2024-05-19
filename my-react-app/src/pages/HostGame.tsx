@@ -14,7 +14,7 @@ const HostGame = () => {
         try {
             await axios.post('http://localhost:3000/game-sessions/create', {
                 roomCode: roomCode.current,
-                players: [{name: ownerDisplayName, image: RandomIconGenerator()}],
+                players: [{name: ownerDisplayName, image: RandomIconGenerator(), isHost: true}],
                 roundTime: timePerRound,
                 roundAmount: rounds
             })

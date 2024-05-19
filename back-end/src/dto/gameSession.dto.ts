@@ -2,6 +2,7 @@
 class PlayerDto {
     name: string;
     image: string;
+    isHost: boolean;
 }
 export class GameSessionDto {
     roomCode: string;
