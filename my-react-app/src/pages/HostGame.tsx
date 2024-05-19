@@ -1,15 +1,37 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { Stack, Typography, Input, Button, Slider, Box } from '@mui/joy'
+import axios from "axios";
 import styles from '../assets/MuiStyles'
 const { headerFontSize, subheaderFontSize } = styles;
 import RoomCodeGenerator from "../assets/RoomCodeGenerator";
+import RandomIconGenerator from "../assets/RandomIconGenerator";
 const HostGame = () => {
     const navigate = useNavigate();
     const roomCode = useRef<string>(RoomCodeGenerator());
-    const startGame = () => navigate(`/r/${roomCode.current}`)
+    const startGame = async () => {
+        if(ownerDisplayName==='') return; // Don't do anything if owner display name is null
+        try {
+            await axios.post('http://localhost:3000/game-sessions/create', {
+                roomCode: roomCode.current,
+                players: [{name: ownerDisplayName, image: RandomIconGenerator()}],
+                roundTime: timePerRound,
+                roundAmount: rounds
+            })
+            navigate(`/r/${roomCode.current}`)
+        }
+        catch (error){
+            console.error(error)
+        }
+    }
+    const [ownerDisplayName, setOwnerDisplayName] = useState('');
     const [timePerRound, setTimePerRound] = useState<number | number[]>(30);
     const [rounds, setRounds] = useState<number | number[]>(6);
+
+    useEffect(()=>{
+        console.log(`Time per round: ${timePerRound}, Rounds: ${[rounds]}, Name of owner: ${ownerDisplayName}, Room code: ${roomCode.current}`);
+    })
+
     return (
         <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8 }}>
             {/*  Header */}
@@ -18,7 +40,7 @@ const HostGame = () => {
             <Typography level='h1' sx={{ pb: 2 }} >Host a game</Typography>
 
             <Typography level='h3' fontSize={subheaderFontSize} >Your Display Name</Typography>
-            <Input size="md" color="neutral" variant="outlined" placeholder="Enter display name" />
+            <Input size="md" value={ownerDisplayName} onChange={(event) => setOwnerDisplayName(event.target.value)} color="neutral" variant="outlined" placeholder="Enter display name" />
 
             <Typography level='h3' fontSize={subheaderFontSize} >Rounds</Typography>
             <Box sx={{width: '400px'}}>
@@ -27,7 +49,7 @@ const HostGame = () => {
 
             <Typography level='h3' fontSize={subheaderFontSize} >Time per round (seconds)</Typography>
             <Box sx={{width: '400px'}}>
-                <Slider onChange={ (event, newTime) => setTimePerRound(newTime) } aria-label="Custom marks" color='primary' value={timePerRound} min={15} max={75} step={5} valueLabelDisplay="on" sx={{"--Slider-trackSize": "7px"}}/>
+                <Slider onChange={ (event, newTime) => {setTimePerRound(newTime)} } aria-label="Custom marks" color='primary' value={timePerRound} min={15} max={75} step={5} valueLabelDisplay="on" sx={{"--Slider-trackSize": "7px"}}/>
             </Box>
 
             <Button color='neutral' size='lg' variant='solid' onClick={startGame}>Start game!</Button>

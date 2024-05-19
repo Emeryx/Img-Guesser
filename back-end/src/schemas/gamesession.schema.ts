@@ -2,11 +2,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { HydratedDocument } from 'mongoose'
 export type GameSessionDocument = HydratedDocument<GameSession>;
-
-interface Player {
-    name: string;
-    image: string;
-}
+import { Player } from './player.interface';
 
 @Schema()
 export class GameSession {
