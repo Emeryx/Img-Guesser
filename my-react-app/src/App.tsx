@@ -57,7 +57,7 @@ function App() {
       <Routes>
         <Route path='/' Component={Main} />
         <Route path='/h' Component={HostGame} />
-        <Route path='/r/*' element={<GameRoom {...gameSessionMockup} />} />
+        <Route path='/r/:room-code' element={<GameRoom {...gameSessionMockup} />} />
       </Routes>
     </Router>
   )
