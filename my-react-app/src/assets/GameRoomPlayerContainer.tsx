@@ -5,7 +5,7 @@ import { Player } from '../../../back-end/src/schemas/player.interface'
 import hostIcon from './hostIcon.webp'
 const PlayerContainer: React.FC<Player> = ({ name, image, isHost }) => {
     return (
-        <Box height={200} width={250}>
+        <Box height={250} width={250}>
             <Stack direction='column' justifyContent='center' alignItems='center' spacing={2}>
                 <img src={image} style={{width: '128px', height: '128px', objectFit: 'cover', borderRadius: '50%'}} />
                 <Stack direction='row' justifyContent='center' alignItems='center' spacing={2}>

@@ -6,11 +6,30 @@ import styles from '../assets/MuiStyles'
 const { headerFontSize, subheaderFontSize } = styles;
 import RoomCodeGenerator from "../assets/RoomCodeGenerator";
 import RandomIconGenerator from "../assets/RandomIconGenerator";
+
+interface nameErrorDisplayProps {
+    display: string,
+    errorMessage: string
+}
+
 const HostGame = () => {
     const navigate = useNavigate();
     const roomCode = useRef<string>(RoomCodeGenerator());
     const startGame = async () => {
-        if(ownerDisplayName==='') return; // Don't do anything if owner display name is null
+        if(ownerDisplayName===''){
+            setNameErrorDisplay({
+                display: 'block',
+                errorMessage: 'Please type a valid name!'
+            });
+            return;
+        } // Don't do anything if owner display name is null
+        else if(ownerDisplayName.length>16){
+            setNameErrorDisplay({
+                display: 'block',
+                errorMessage: 'Your name should not contain more than 16 characters'
+            });
+            return;
+        }
         try {
             await axios.post('http://localhost:3000/game-sessions/create', {
                 roomCode: roomCode.current,
@@ -24,6 +43,7 @@ const HostGame = () => {
             console.error(error)
         }
     }
+    const [nameErrorDisplay, setNameErrorDisplay] = useState<nameErrorDisplayProps>({display: 'none', errorMessage: ''});
     const [ownerDisplayName, setOwnerDisplayName] = useState('');
     const [timePerRound, setTimePerRound] = useState<number | number[]>(30);
     const [rounds, setRounds] = useState<number | number[]>(6);
@@ -41,6 +61,7 @@ const HostGame = () => {
 
             <Typography level='h3' fontSize={subheaderFontSize} >Your Display Name</Typography>
             <Input size="md" value={ownerDisplayName} onChange={(event) => setOwnerDisplayName(event.target.value)} color="neutral" variant="outlined" placeholder="Enter display name" />
+            <Typography level='h4' fontSize='1.25rem' sx={{display:nameErrorDisplay.display}} >{nameErrorDisplay.errorMessage}</Typography>
 
             <Typography level='h3' fontSize={subheaderFontSize} >Rounds</Typography>
             <Box sx={{width: '400px'}}>
