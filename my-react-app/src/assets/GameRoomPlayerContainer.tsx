@@ -3,7 +3,7 @@ import styles from '../assets/MuiStyles'
 const { subheaderFontSize } = styles;
 import { Player } from '../../../back-end/src/schemas/player.interface'
 import hostIcon from './hostIcon.webp'
-const PlayerContainer: React.FC<Player> = ({ name, image, isHost }) => {
+const PlayerContainer: React.FC<Player> = ({ name, image, isHost, score, ready }) => {
     return (
         <Box height={250} width={250}>
             <Stack direction='column' justifyContent='center' alignItems='center' spacing={2}>

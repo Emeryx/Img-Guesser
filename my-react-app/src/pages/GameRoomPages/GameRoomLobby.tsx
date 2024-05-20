@@ -22,7 +22,7 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, display }) =>
             <Stack sx={{ py: 4, maxWidth: '1200px' }} direction={{ xs: 'column', md: 'row' }} flexWrap='wrap' justifyContent='center' alignItems='center' spacing={4} >
                 {
                     players.map((player, index) => {
-                        return <PlayerContainer key={'Player' + index} name={player.name} image={player.image} isHost={player.isHost} />
+                        return <PlayerContainer key={'Player' + index} name={player.name} image={player.image} isHost={player.isHost} score={player.score} ready={player.ready} />
                     })
                 }
             </Stack>

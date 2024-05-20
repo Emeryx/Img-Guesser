@@ -33,9 +33,17 @@ const HostGame = () => {
         try {
             await axios.post('http://localhost:3000/game-sessions/create', {
                 roomCode: roomCode.current,
-                players: [{name: ownerDisplayName, image: RandomIconGenerator(), isHost: true}],
+                players: [{name: ownerDisplayName, image: RandomIconGenerator(), score: 0, ready: false, isHost: true}],
                 roundTime: timePerRound,
-                roundAmount: rounds
+                roundAmount: rounds,
+                currentRound: 0,
+                gameState: {
+                    paused: true,
+                    lobbyPhase: true,
+                    gamePhase: false,
+                    roundEndPhase: false,
+                    gameEndPhase: false
+                }
             })
             navigate(`/r/${roomCode.current}`)
         }

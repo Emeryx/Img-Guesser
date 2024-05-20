@@ -10,7 +10,7 @@ export class GameSessionController {
     @Post('create') // A POST request to localhost:3000/game-sessions/create triggers this operation 
     // The @Body() decorator allows to extract data from the body of an incoming HTTP request
     async createGameSession (@Body() gameSessionDto: GameSessionDto) {
-        const {roomCode, players, roundTime, roundAmount} = gameSessionDto;
-        return this.gameCreationService.createGameSession(roomCode, players, roundTime, roundAmount);
+        const {roomCode, players, roundTime, roundAmount, currentRound, gameState} = gameSessionDto;
+        return this.gameCreationService.createGameSession(roomCode, players, roundTime, roundAmount, currentRound, gameState);
     }
 }

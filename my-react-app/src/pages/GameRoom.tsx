@@ -3,10 +3,10 @@ import { GameSession } from '../../../back-end/src/schemas/gamesession.interface
 import GameRoomLobby from './GameRoomPages/GameRoomLobby';
 // { name, image, isHost }
 
-const GameRoom : React.FC<GameSession> = (gameSession) => {
-    
+const GameRoom: React.FC<GameSession> = (gameSession) => {
+
     return (
-        <GameRoomLobby gameSession={gameSession} display='flex' />
+        <GameRoomLobby gameSession={gameSession} display={gameSession.gameState.lobbyPhase ? 'flex' : 'none'} />
     )
 }
 export default GameRoom;
