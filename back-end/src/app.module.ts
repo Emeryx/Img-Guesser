@@ -7,6 +7,7 @@ import * as dotenv from 'dotenv';
 import { GameSessionSchema } from './schemas/gamesession.schema';
 import { RetrieveGameSessionsService } from './services/retrieveGameSessions.service';
 import { RetrieveOneGameSessionService } from './services/retrieveOneGameSession.service';
+import { JoinGameSessionService } from './services/joinGameSession.service';
 dotenv.config();
 @Module({
   imports: [
@@ -14,6 +15,6 @@ dotenv.config();
     MongooseModule.forFeature([{ name: 'GameSession', schema: GameSessionSchema}])
   ],
   controllers: [GameSessionController],
-  providers: [GameCreationService, RetrieveGameSessionsService, RetrieveOneGameSessionService],
+  providers: [GameCreationService, RetrieveGameSessionsService, RetrieveOneGameSessionService, JoinGameSessionService],
 })
 export class AppModule {}

@@ -5,12 +5,15 @@ import { GameSessionDto } from "src/dto/gameSession.dto";
 import { RetrieveGameSessionsService } from "src/services/retrieveGameSessions.service";
 import { RetrieveOneGameSessionService } from "src/services/retrieveOneGameSession.service";
 import { GameSession } from "src/schemas/gamesession.schema";
+import { JoinGameSessionService } from "src/services/joinGameSession.service";
+import { PlayerJoinDto } from "src/dto/playerJoin.dto";
 @Controller('game-sessions')
 export class GameSessionController {
     
     constructor(private readonly gameCreationService: GameCreationService,
         private readonly retrieveGameSessionsService: RetrieveGameSessionsService,
-        private readonly retrieveOneGameSessionService: RetrieveOneGameSessionService
+        private readonly retrieveOneGameSessionService: RetrieveOneGameSessionService,
+        private readonly joinGameSessionService: JoinGameSessionService
     ) {}
 
     @Post('create') // A POST request to localhost:3000/game-sessions/create triggers this operation 
@@ -18,6 +21,12 @@ export class GameSessionController {
     async createGameSession (@Body() gameSessionDto: GameSessionDto) {
         const {roomCode, players, roundTime, roundAmount, currentRound, gameState} = gameSessionDto;
         return this.gameCreationService.createGameSession(roomCode, players, roundTime, roundAmount, currentRound, gameState);
+    }
+
+    @Post('join')
+    async joinGameSession (@Body() playerJoinDto: PlayerJoinDto){
+        const {roomCode, playerDisplayName, randomImage} = playerJoinDto;
+        return this.joinGameSessionService.joinGameSession(roomCode, playerDisplayName, randomImage);
     }
 
     @Get('retrieve-all')

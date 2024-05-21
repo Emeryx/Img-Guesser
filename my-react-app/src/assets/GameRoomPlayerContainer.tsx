@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Stack, Typography, Box } from '@mui/joy'
 import styles from '../assets/MuiStyles'
 const { subheaderFontSize } = styles;

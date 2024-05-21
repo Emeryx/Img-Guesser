@@ -4,6 +4,7 @@ import styles from '../assets/MuiStyles'
 const { headerFontSize, subheaderFontSize } = styles;
 import axios from 'axios';
 import { useState } from 'react';
+import RandomIconGenerator from '../assets/RandomIconGenerator';
 interface nameErrorDisplayProps {
     display: string,
     errorMessage: string
@@ -33,10 +34,7 @@ function Main() {
             return;
         }
         try {
-            const response = await axios.get('http://localhost:3000/game-sessions/retrieve-one',
-            {
-                params: { inputtedRoomCode: roomCode }
-            });
+            const response = await axios.post('http://localhost:3000/game-sessions/join',{roomCode: roomCode, playerDisplayName: playerDisplayName, randomImage: RandomIconGenerator()})
             console.log(response);
         }
         catch(error){
