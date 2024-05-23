@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Post, Body, Get, Query } from "@nestjs/common";
+import { Controller, Post, Body, Get, Query, BadRequestException } from "@nestjs/common";
 import { GameCreationService } from "src/services/gameSessionCreation.service";
 import { GameSessionDto } from "src/dto/gameSession.dto";
 import { RetrieveGameSessionsService } from "src/services/retrieveGameSessions.service";
@@ -30,6 +30,10 @@ export class GameSessionController {
     async joinGameSession (@Body() playerJoinDto: PlayerJoinDto){
         const {roomCode, playerDisplayName, randomImage} = playerJoinDto;
         await this.playerNameValidationService.validatePlayerName(playerDisplayName);
+        const gameSession: any = await this.retrieveOneGameSessionService.retrieveOneGameSession(roomCode);
+        if(!gameSession){
+            throw new BadRequestException('Room not found')
+        }
         return this.joinGameSessionService.joinGameSession(roomCode, playerDisplayName, randomImage);
     }
 
