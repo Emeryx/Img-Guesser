@@ -7,25 +7,29 @@ import { RetrieveOneGameSessionService } from "src/services/retrieveOneGameSessi
 import { GameSession } from "src/schemas/gamesession.schema";
 import { JoinGameSessionService } from "src/services/joinGameSession.service";
 import { PlayerJoinDto } from "src/dto/playerJoin.dto";
+import { PlayerNameValidationService } from "src/services/playerNameValidation.service";
 @Controller('game-sessions')
 export class GameSessionController {
     
     constructor(private readonly gameCreationService: GameCreationService,
         private readonly retrieveGameSessionsService: RetrieveGameSessionsService,
         private readonly retrieveOneGameSessionService: RetrieveOneGameSessionService,
-        private readonly joinGameSessionService: JoinGameSessionService
+        private readonly joinGameSessionService: JoinGameSessionService,
+        private readonly playerNameValidationService: PlayerNameValidationService
     ) {}
 
     @Post('create') // A POST request to localhost:3000/game-sessions/create triggers this operation 
     // The @Body() decorator allows to extract data from the body of an incoming HTTP request
     async createGameSession (@Body() gameSessionDto: GameSessionDto) {
         const {roomCode, players, roundTime, roundAmount, currentRound, gameState} = gameSessionDto;
+        await this.playerNameValidationService.validatePlayerName(players[0].name);
         return this.gameCreationService.createGameSession(roomCode, players, roundTime, roundAmount, currentRound, gameState);
     }
 
     @Post('join')
     async joinGameSession (@Body() playerJoinDto: PlayerJoinDto){
         const {roomCode, playerDisplayName, randomImage} = playerJoinDto;
+        await this.playerNameValidationService.validatePlayerName(playerDisplayName);
         return this.joinGameSessionService.joinGameSession(roomCode, playerDisplayName, randomImage);
     }
 

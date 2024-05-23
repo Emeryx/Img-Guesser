@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef } from "react";
 import { Stack, Typography, Input, Button, Slider, Box } from '@mui/joy'
 import axios from "axios";
 import styles from '../assets/MuiStyles'
@@ -16,20 +16,6 @@ const HostGame = () => {
     const navigate = useNavigate();
     const roomCode = useRef<string>(RoomCodeGenerator());
     const startGame = async () => {
-        if(ownerDisplayName===''){
-            setNameErrorDisplay({
-                display: 'block',
-                errorMessage: 'Please type a valid name!'
-            });
-            return;
-        } // Don't do anything if owner display name is null
-        else if(ownerDisplayName.length>16){
-            setNameErrorDisplay({
-                display: 'block',
-                errorMessage: 'Your name should not contain more than 16 characters'
-            });
-            return;
-        }
         try {
             await axios.post('http://localhost:3000/game-sessions/create', {
                 roomCode: roomCode.current,
@@ -47,18 +33,20 @@ const HostGame = () => {
             })
             navigate(`/r/${roomCode.current}`)
         }
-        catch (error){
-            console.error(error)
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        catch (error: any){
+            const errorMessage = error?.response?.data?.message;
+            console.log(errorMessage);
+            setNameErrorDisplay({
+                display: 'block',
+                errorMessage: errorMessage
+            });
         }
     }
     const [nameErrorDisplay, setNameErrorDisplay] = useState<nameErrorDisplayProps>({display: 'none', errorMessage: ''});
     const [ownerDisplayName, setOwnerDisplayName] = useState('');
     const [timePerRound, setTimePerRound] = useState<number | number[]>(30);
     const [rounds, setRounds] = useState<number | number[]>(6);
-
-    useEffect(()=>{
-        console.log(`Time per round: ${timePerRound}, Rounds: ${[rounds]}, Name of owner: ${ownerDisplayName}, Room code: ${roomCode.current}`);
-    })
 
     return (
         <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8 }}>

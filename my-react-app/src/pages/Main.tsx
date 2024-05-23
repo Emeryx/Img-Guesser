@@ -19,26 +19,18 @@ function Main() {
       navigate('/h');
     }
     const joinGame = async () => {
-        if(playerDisplayName===''){
-            setNameErrorDisplay({
-                display: 'block',
-                errorMessage: 'Please type a valid name!'
-            });
-            return;
-        } // Don't do anything if owner display name is null
-        else if(playerDisplayName.length>16){
-            setNameErrorDisplay({
-                display: 'block',
-                errorMessage: 'Your name should not contain more than 16 characters'
-            });
-            return;
-        }
         try {
             const response = await axios.post('http://localhost:3000/game-sessions/join',{roomCode: roomCode, playerDisplayName: playerDisplayName, randomImage: RandomIconGenerator()})
             console.log(response);
         }
-        catch(error){
-            console.error(error);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        catch(error: any){
+            const errorMessage = error?.response?.data?.message;
+            console.log(errorMessage);
+            setNameErrorDisplay({
+                display: 'block',
+                errorMessage: errorMessage
+            });
         }
     }
     return (
