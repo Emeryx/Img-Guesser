@@ -5,6 +5,7 @@ const { headerFontSize, subheaderFontSize } = styles;
 import axios from 'axios';
 import { useState } from 'react';
 import RandomIconGenerator from '../assets/RandomIconGenerator';
+import { playerSocket } from '../assets/PlayerSocket';
 interface nameErrorDisplayProps {
     display: string,
     errorMessage: string
@@ -21,6 +22,8 @@ function Main() {
     const joinGame = async () => {
         try {
             const response = await axios.post('http://localhost:3000/game-sessions/join',{roomCode: roomCode, playerDisplayName: playerDisplayName, randomImage: RandomIconGenerator()})
+            const client = new playerSocket('http://localhost:3000');
+            client.handleJoinRoom(roomCode);
             console.log(response);
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

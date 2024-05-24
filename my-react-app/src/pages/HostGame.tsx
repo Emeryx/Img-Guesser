@@ -1,11 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { useState, useRef } from "react";
+import { useState } from "react";
 import { Stack, Typography, Input, Button, Slider, Box } from '@mui/joy'
 import axios from "axios";
 import styles from '../assets/MuiStyles'
 const { headerFontSize, subheaderFontSize } = styles;
 import RoomCodeGenerator from "../assets/RoomCodeGenerator";
 import RandomIconGenerator from "../assets/RandomIconGenerator";
+import { playerSocket } from "../assets/PlayerSocket";
 
 interface nameErrorDisplayProps {
     display: string,
@@ -14,11 +15,11 @@ interface nameErrorDisplayProps {
 
 const HostGame = () => {
     const navigate = useNavigate();
-    const roomCode = useRef<string>(RoomCodeGenerator());
     const startGame = async () => {
         try {
+            const roomCode = RoomCodeGenerator();
             await axios.post('http://localhost:3000/game-sessions/create', {
-                roomCode: roomCode.current,
+                roomCode: roomCode,
                 players: [{name: ownerDisplayName, image: RandomIconGenerator(), score: 0, ready: false, isHost: true}],
                 roundTime: timePerRound,
                 roundAmount: rounds,
@@ -31,7 +32,9 @@ const HostGame = () => {
                     gameEndPhase: false
                 }
             })
-            navigate(`/r/${roomCode.current}`)
+            const client = new playerSocket('http://localhost:3000');
+            client.handleJoinRoom(roomCode);
+            navigate(`/r/${roomCode}`)
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         catch (error: any){
