@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { ConnectedSocket, MessageBody, SubscribeMessage, WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
+import { SubscribeMessage, WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
 @WebSocketGateway({cors: true})
 export class PlayerSocketGateway {

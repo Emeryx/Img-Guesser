@@ -24,6 +24,7 @@ function Main() {
             const response = await axios.post('http://localhost:3000/game-sessions/join',{roomCode: roomCode, playerDisplayName: playerDisplayName, randomImage: RandomIconGenerator()})
             const client = new playerSocket();
             client.handleJoinRoom(roomCode);
+            navigate(`/r/${roomCode}`)
             console.log(response);
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any

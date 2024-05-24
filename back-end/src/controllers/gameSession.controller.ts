@@ -8,6 +8,7 @@ import { GameSession } from "src/schemas/gamesession.schema";
 import { JoinGameSessionService } from "src/services/joinGameSession.service";
 import { PlayerJoinDto } from "src/dto/playerJoin.dto";
 import { PlayerNameValidationService } from "src/services/playerNameValidation.service";
+
 @Controller('game-sessions')
 export class GameSessionController {
     
@@ -21,9 +22,9 @@ export class GameSessionController {
     @Post('create') // A POST request to localhost:3000/game-sessions/create triggers this operation 
     // The @Body() decorator allows to extract data from the body of an incoming HTTP request
     async createGameSession (@Body() gameSessionDto: GameSessionDto) {
-        const {roomCode, players, roundTime, roundAmount, currentRound, gameState} = gameSessionDto;
-        await this.playerNameValidationService.validatePlayerName(players[0].name);
-        return this.gameCreationService.createGameSession(roomCode, players, roundTime, roundAmount, currentRound, gameState);
+        const {hostName, hostImage, roundTime, roundAmount} = gameSessionDto;
+        await this.playerNameValidationService.validatePlayerName(hostName);
+        return this.gameCreationService.createGameSession(hostName, hostImage, roundTime, roundAmount);
     }
 
     @Post('join')

@@ -4,10 +4,9 @@ import { Stack, Typography, Input, Button, Slider, Box } from '@mui/joy'
 import axios from "axios";
 import styles from '../assets/MuiStyles'
 const { headerFontSize, subheaderFontSize } = styles;
-import RoomCodeGenerator from "../assets/RoomCodeGenerator";
+// import RoomCodeGenerator from "../assets/RoomCodeGenerator";
 import RandomIconGenerator from "../assets/RandomIconGenerator";
 import { playerSocket } from "../assets/PlayerSocket";
-
 interface nameErrorDisplayProps {
     display: string,
     errorMessage: string
@@ -17,24 +16,10 @@ const HostGame = () => {
     const navigate = useNavigate();
     const startGame = async () => {
         try {
-            const roomCode = RoomCodeGenerator();
-            await axios.post('http://localhost:3000/game-sessions/create', {
-                roomCode: roomCode,
-                players: [{name: ownerDisplayName, image: RandomIconGenerator(), score: 0, ready: false, isHost: true}],
-                roundTime: timePerRound,
-                roundAmount: rounds,
-                currentRound: 0,
-                gameState: {
-                    paused: true,
-                    lobbyPhase: true,
-                    gamePhase: false,
-                    roundEndPhase: false,
-                    gameEndPhase: false
-                }
-            })
+            const { data: gameSession } = await axios.post('http://localhost:3000/game-sessions/create', {hostName: ownerDisplayName, hostImage: RandomIconGenerator(), roundTime: timePerRound, roundAmount: rounds})
             const client = new playerSocket();
-            client.handleJoinRoom(roomCode);
-            navigate(`/r/${roomCode}`)
+            client.handleJoinRoom(gameSession.roomCode);
+            navigate(`/r/${gameSession.roomCode}`)
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         catch (error: any){
