@@ -1,11 +1,11 @@
 import { Socket, io } from "socket.io-client";
-
 export class playerSocket {
-
+    
+    backendURL = 'http://localhost:3000'
     private socket: Socket;
     
-    constructor(backendURL: string = 'http://localhost:3000') {
-        this.socket = io(backendURL);
+    constructor() {
+        this.socket = io(this.backendURL);
     }
 
     // Client emitted messages

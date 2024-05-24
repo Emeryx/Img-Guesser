@@ -22,7 +22,7 @@ function Main() {
     const joinGame = async () => {
         try {
             const response = await axios.post('http://localhost:3000/game-sessions/join',{roomCode: roomCode, playerDisplayName: playerDisplayName, randomImage: RandomIconGenerator()})
-            const client = new playerSocket('http://localhost:3000');
+            const client = new playerSocket();
             client.handleJoinRoom(roomCode);
             console.log(response);
         }

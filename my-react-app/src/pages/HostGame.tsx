@@ -32,7 +32,7 @@ const HostGame = () => {
                     gameEndPhase: false
                 }
             })
-            const client = new playerSocket('http://localhost:3000');
+            const client = new playerSocket();
             client.handleJoinRoom(roomCode);
             navigate(`/r/${roomCode}`)
         }

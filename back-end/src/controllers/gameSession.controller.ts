@@ -30,9 +30,12 @@ export class GameSessionController {
     async joinGameSession (@Body() playerJoinDto: PlayerJoinDto){
         const {roomCode, playerDisplayName, randomImage} = playerJoinDto;
         await this.playerNameValidationService.validatePlayerName(playerDisplayName);
-        const gameSession: any = await this.retrieveOneGameSessionService.retrieveOneGameSession(roomCode);
+        const gameSession: GameSession = await this.retrieveOneGameSessionService.retrieveOneGameSession(roomCode);
         if(!gameSession){
             throw new BadRequestException('Room not found')
+        }
+        if(gameSession.players.length >=8){
+            throw new BadRequestException('Room is full')
         }
         return this.joinGameSessionService.joinGameSession(roomCode, playerDisplayName, randomImage);
     }
