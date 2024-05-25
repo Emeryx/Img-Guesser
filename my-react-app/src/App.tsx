@@ -4,10 +4,12 @@ import Main from './pages/Main'
 import HostGame from './pages/HostGame';
 import GameRoom from './pages/GameRoom';
 import RandomIconGenerator from './assets/RandomIconGenerator';
+import { QueryClient, QueryClientProvider } from 'react-query';
 const gameSessionMockup = {
   roomCode: 'ABCD',
   players: [
     {
+      uid: 'awoo',
       name: 'Emery',
       image: RandomIconGenerator(),
       isHost: true,
@@ -15,6 +17,7 @@ const gameSessionMockup = {
       ready: false,
     },
     {
+      
       name: 'Rando',
       image: RandomIconGenerator(),
       isHost: false,
@@ -22,6 +25,7 @@ const gameSessionMockup = {
       ready: false,
     },
     {
+      
       name: 'Awoo',
       image: RandomIconGenerator(),
       isHost: false,
@@ -29,6 +33,7 @@ const gameSessionMockup = {
       ready: false,
     },
     {
+      
       name: 'One two',
       image: RandomIconGenerator(),
       isHost: false,
@@ -36,6 +41,7 @@ const gameSessionMockup = {
       ready: false,
     },
     {
+      
       name: 'Bahaha',
       image: RandomIconGenerator(),
       isHost: false,
@@ -43,6 +49,7 @@ const gameSessionMockup = {
       ready: false,
     },
     {
+      
       name: 'Slava Ukraini',
       image: RandomIconGenerator(),
       isHost: false,
@@ -50,6 +57,7 @@ const gameSessionMockup = {
       ready: false,
     },
     {
+      
       name: 'I got political there',
       image: RandomIconGenerator(),
       isHost: false,
@@ -57,6 +65,7 @@ const gameSessionMockup = {
       ready: false,
     },
     {
+      
       name: 'Lol',
       image: RandomIconGenerator(),
       isHost: false,
@@ -75,15 +84,20 @@ const gameSessionMockup = {
     gameEndPhase: false
   }
 }
+
+const queryClient = new QueryClient();
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path='/' Component={Main} />
-        <Route path='/h' Component={HostGame} />
-        <Route path='/r/:roomCode' element={<GameRoom {...gameSessionMockup} />} />
-      </Routes>
-    </Router>
+    <QueryClientProvider client={queryClient}>
+      <Router>
+          <Routes>
+            <Route path='/' Component={Main} />
+            <Route path='/h' Component={HostGame} />
+              <Route path='/r/:roomCode' element={<GameRoom {...gameSessionMockup} />} />
+          </Routes>
+      </Router>
+    </QueryClientProvider>
   )
 }
 

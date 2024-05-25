@@ -2,7 +2,7 @@
 import { Stack, Typography, Box } from '@mui/joy'
 import styles from '../assets/MuiStyles'
 const { subheaderFontSize } = styles;
-import { Player } from '../../../back-end/src/schemas/player.interface'
+import { Player } from '../interfaces/player.interface';
 import hostIcon from './hostIcon.webp'
 const PlayerContainer: React.FC<Player> = ({ name, image, isHost, score, ready }) => {
     return (

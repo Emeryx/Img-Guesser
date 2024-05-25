@@ -1,6 +1,5 @@
-/* eslint-disable prettier/prettier */
 export interface Player {
-    uid: string;
+    uid?: string; // Optional on front end, Must in back end
     name: string;
     image: string;
     score: number;

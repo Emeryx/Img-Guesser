@@ -47,8 +47,8 @@ export class GameSessionController {
     }
 
     @Get('retrieve-one')
-    async retrieveOneGameSession (@Query('inputtedRoomCode') inputtedRoomCode: string) : Promise<GameSession> {
-        return this.retrieveOneGameSessionService.retrieveOneGameSession(inputtedRoomCode);
+    async retrieveOneGameSession (@Query('roomCode') roomCode: string) : Promise<GameSession> {
+        return this.retrieveOneGameSessionService.retrieveOneGameSession(roomCode);
     }
 
 }

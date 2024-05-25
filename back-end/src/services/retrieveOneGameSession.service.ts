@@ -6,9 +6,9 @@ import { GameSession } from "src/schemas/gamesession.schema";
 @Injectable()
 export class RetrieveOneGameSessionService {
     constructor(@InjectModel('GameSession') private gameSessionModel: Model<GameSession>) {} // The constructor is used to inject the mongoDB model
-    async retrieveOneGameSession(inputtedRoomCode: string) : Promise<GameSession> {
+    async retrieveOneGameSession(roomCode: string) : Promise<GameSession> {
         try{
-            return this.gameSessionModel.findOne({roomCode: inputtedRoomCode});
+            return this.gameSessionModel.findOne({roomCode});
         }
         catch(error){
             console.error(error);

@@ -1,8 +1,8 @@
-import { GameSession } from '../../../../back-end/src/schemas/gamesession.interface'
-
+import { GameSession } from "../../interfaces/gamesession.interface";
 interface GameRoomPageProps {
     gameSession: GameSession,
-    display: string
+    display: string,
+    isLoading: boolean
 }
 
 export default GameRoomPageProps;

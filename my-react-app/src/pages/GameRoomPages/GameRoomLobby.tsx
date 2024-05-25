@@ -5,10 +5,10 @@ import PlayerContainer from '../../assets/GameRoomPlayerContainer';
 // import { Player } from '../../../back-end/src/schemas/player.interface'
 import GameRoomPageProps from './GameRoomPageProps.interface';
 import { useState } from 'react';
-import { Player } from '../../../../back-end/src/schemas/player.interface';
+import { Player } from '../../interfaces/player.interface';
 
 // { name, image, isHost }
-const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, display }) => {
+const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, display, isLoading }) => {
 
     const [players, setPlayers] = useState<Player[]>(gameSession.players)
 
