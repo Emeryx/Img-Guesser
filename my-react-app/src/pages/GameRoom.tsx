@@ -11,7 +11,7 @@ const GameRoom: React.FC<GameSession> = () => {
 
     const { roomCode } = useParams();
     const {isLoading, error, data} = useQuery({
-        queryKey: ['gameRoomData', roomCode],
+        queryKey: ['gameRoomData'],
         queryFn: async () => {
             const {data: gameSession} = await axios.get('http://localhost:3000/game-sessions/retrieve-one', { params: { roomCode }});
             console.log(gameSession)

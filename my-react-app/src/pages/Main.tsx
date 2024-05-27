@@ -3,9 +3,9 @@ import { Stack, Typography, Input, Button } from '@mui/joy'
 import styles from '../assets/MuiStyles'
 const { headerFontSize, subheaderFontSize } = styles;
 import axios from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import RandomIconGenerator from '../assets/RandomIconGenerator';
-import { playerSocket } from '../assets/PlayerSocket';
+import { client } from '../assets/PlayerSocket';
 interface nameErrorDisplayProps {
     display: string,
     errorMessage: string
@@ -16,16 +16,16 @@ function Main() {
     const [roomCode, setRoomCode] = useState<string>('');
     const [playerDisplayName, setPlayerDisplayName] = useState<string>('');
     const [nameErrorDisplay, setNameErrorDisplay] = useState<nameErrorDisplayProps>({display: 'none', errorMessage: ''});
+    
     const goToHostGame = () => {
       navigate('/h');
     }
+
     const joinGame = async () => {
         try {
-            const response = await axios.post('http://localhost:3000/game-sessions/join',{roomCode: roomCode, playerDisplayName: playerDisplayName, randomImage: RandomIconGenerator()})
-            const client = new playerSocket();
+            await axios.post('http://localhost:3000/game-sessions/join',{roomCode: roomCode, playerDisplayName: playerDisplayName, randomImage: RandomIconGenerator()})
             client.handleJoinRoom(roomCode);
             navigate(`/r/${roomCode}`)
-            console.log(response);
         }
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         catch(error: any){
@@ -37,6 +37,11 @@ function Main() {
             });
         }
     }
+
+    useEffect(()=>{
+        client.handleLeaveRooms();
+    },[])
+
     return (
         <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8 }}>
             {/*  Header */}

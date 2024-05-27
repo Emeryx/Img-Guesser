@@ -4,13 +4,24 @@ const { headerFontSize, subheaderFontSize } = styles;
 import PlayerContainer from '../../assets/GameRoomPlayerContainer';
 // import { Player } from '../../../back-end/src/schemas/player.interface'
 import GameRoomPageProps from './GameRoomPageProps.interface';
-import { useState } from 'react';
-import { Player } from '../../interfaces/player.interface';
-
+import { client } from '../../assets/PlayerSocket';
+import { useQueryClient } from 'react-query';
+import { useEffect } from 'react';
 // { name, image, isHost }
 const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, display, isLoading }) => {
 
-    const [players, setPlayers] = useState<Player[]>(gameSession.players)
+    const queryClient = useQueryClient();
+
+    useEffect(() => {
+        client.getSocket().on('player-connected', async () => {
+            console.log("PLAYER CONNECTED!");
+            await queryClient.invalidateQueries(['gameRoomData'])
+        })
+
+        return () => {
+            client.getSocket().removeListener('player-connected')
+        };
+    })
 
     return (
         <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8, display: display }}>
@@ -21,7 +32,7 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, display, isLo
             <Typography level='h3' fontSize={subheaderFontSize} >Room Code: {gameSession.roomCode}</Typography>
             <Stack sx={{ py: 4, maxWidth: '1200px' }} direction={{ xs: 'column', md: 'row' }} flexWrap='wrap' justifyContent='center' alignItems='center' spacing={4} >
                 {
-                    players.map((player, index) => {
+                    gameSession.players.map((player, index) => {
                         return <PlayerContainer key={'Player' + index} name={player.name} image={player.image} isHost={player.isHost} score={player.score} ready={player.ready} />
                     })
                 }

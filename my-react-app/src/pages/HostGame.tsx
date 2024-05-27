@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Stack, Typography, Input, Button, Slider, Box } from '@mui/joy'
 import axios from "axios";
 import styles from '../assets/MuiStyles'
 const { headerFontSize, subheaderFontSize } = styles;
 // import RoomCodeGenerator from "../assets/RoomCodeGenerator";
 import RandomIconGenerator from "../assets/RandomIconGenerator";
-import { playerSocket } from "../assets/PlayerSocket";
+import { client } from "../assets/PlayerSocket";
 interface nameErrorDisplayProps {
     display: string,
     errorMessage: string
@@ -14,10 +14,10 @@ interface nameErrorDisplayProps {
 
 const HostGame = () => {
     const navigate = useNavigate();
+    
     const startGame = async () => {
         try {
             const { data: gameSession } = await axios.post('http://localhost:3000/game-sessions/create', {hostName: ownerDisplayName, hostImage: RandomIconGenerator(), roundTime: timePerRound, roundAmount: rounds})
-            const client = new playerSocket();
             client.handleJoinRoom(gameSession.roomCode);
             navigate(`/r/${gameSession.roomCode}`)
         }
@@ -31,6 +31,11 @@ const HostGame = () => {
             });
         }
     }
+
+    useEffect(()=>{
+        client.handleLeaveRooms();
+    },[])
+
     const [nameErrorDisplay, setNameErrorDisplay] = useState<nameErrorDisplayProps>({display: 'none', errorMessage: ''});
     const [ownerDisplayName, setOwnerDisplayName] = useState('');
     const [timePerRound, setTimePerRound] = useState<number | number[]>(30);
