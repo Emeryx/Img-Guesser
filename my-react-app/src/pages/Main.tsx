@@ -55,7 +55,11 @@ function Main() {
                 </Stack>
                 <Stack direction='column' justifyContent='center' alignItems='center' spacing={2}>
                     <Typography level='h3' fontSize={subheaderFontSize} >Room Code</Typography>
-                    <Input value={roomCode} onChange={(event) => setRoomCode(event.target.value)} size="md" color="neutral" variant="outlined" placeholder="Enter room code" />
+                    <Input value={roomCode} onChange={(event) =>{
+                        const newCharacter: string = event.target.value.charAt(event.target.value.length - 1);
+                        if(!isNaN(parseFloat(newCharacter)) || event.target.value.length > 4) return;
+                        setRoomCode(event.target.value.toUpperCase())}
+                    } size="md" color="neutral" variant="outlined" placeholder="Enter room code" />
                 </Stack>
             </Stack>
             <Typography level='h4' fontSize='1.25rem' sx={{display:nameErrorDisplay.display}} >{nameErrorDisplay.errorMessage}</Typography>
