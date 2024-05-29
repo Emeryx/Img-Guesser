@@ -12,8 +12,9 @@ export class PlayerSocketGateway {
 
     // When a client emits connect-to-room
     @SubscribeMessage('connect-to-room')
-    async handleRoomJoinBoxpieThankYou(client: Socket, {roomCode}:{roomCode : string}, {clientId}:{clientId: string}){ // The received room code should already be valid
+    async handleRoomJoinBoxpieThankYou(client: Socket, payload: {clientId: string; roomCode: string}){ // The received room code should already be valid
         console.log(`----------\n${currentDate()} Server received the client message connect-to-room... ⏳`)
+        const {clientId, roomCode} = payload;
         client.join(roomCode);
         this.server.to(roomCode).emit('player-connected');
         console.log(`Client ${clientId} successfully joined ${roomCode} ✔️`);
@@ -29,6 +30,6 @@ export class PlayerSocketGateway {
                 client.leave(room);
             }
         })
-        console.log(`Client ${clientId} successfully disconnected from all rooms ✔️`);
+        console.log(`${currentDate()} Client ${clientId} successfully disconnected from all rooms ✔️`);
     }
 }
