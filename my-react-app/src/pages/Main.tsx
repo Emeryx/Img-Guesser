@@ -23,7 +23,7 @@ function Main() {
 
     const joinGame = async () => {
         try {
-            await axios.post('http://localhost:3000/game-sessions/join',{roomCode: roomCode, playerDisplayName: playerDisplayName, randomImage: RandomIconGenerator()})
+            await axios.post('http://localhost:3000/game-sessions/join',{roomCode: roomCode, playerDisplayName: playerDisplayName, randomImage: RandomIconGenerator(), uid: client.getSocketId()})
             client.handleJoinRoom(roomCode);
             navigate(`/r/${roomCode}`)
         }

@@ -17,7 +17,7 @@ const HostGame = () => {
     
     const startGame = async () => {
         try {
-            const { data: gameSession } = await axios.post('http://localhost:3000/game-sessions/create', {hostName: ownerDisplayName, hostImage: RandomIconGenerator(), roundTime: timePerRound, roundAmount: rounds})
+            const { data: gameSession } = await axios.post('http://localhost:3000/game-sessions/create', {hostName: ownerDisplayName, hostImage: RandomIconGenerator(), roundTime: timePerRound, roundAmount: rounds, hostUid: client.getSocketId()})
             client.handleJoinRoom(gameSession.roomCode);
             navigate(`/r/${gameSession.roomCode}`)
         }

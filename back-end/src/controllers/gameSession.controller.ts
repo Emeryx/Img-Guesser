@@ -23,16 +23,16 @@ export class GameSessionController {
     // The @Body() decorator allows to extract data from the body of an incoming HTTP request
     async createGameSession (@Body() gameSessionDto: GameSessionDto) {
         console.log('POST /game-sessions/create request received... ⏳')
-        const {hostName, hostImage, roundTime, roundAmount} = gameSessionDto;
+        const {hostName, hostImage, roundTime, roundAmount, hostUid} = gameSessionDto;
         await this.playerNameValidationService.validatePlayerName(hostName);
         console.log('POST /game-sessions/create request accepted, New game and host are now in database ✔️')
-        return this.gameCreationService.createGameSession(hostName, hostImage, roundTime, roundAmount);
+        return this.gameCreationService.createGameSession(hostName, hostImage, roundTime, roundAmount, hostUid);
     }
 
     @Post('join')
     async joinGameSession (@Body() playerJoinDto: PlayerJoinDto){
         console.log('POST /game-sessions/join request received... ⏳')
-        const {roomCode, playerDisplayName, randomImage} = playerJoinDto;
+        const {roomCode, playerDisplayName, randomImage, uid} = playerJoinDto;
         await this.playerNameValidationService.validatePlayerName(playerDisplayName);
         const gameSession: GameSession = await this.retrieveOneGameSessionService.retrieveOneGameSession(roomCode);
         if(!gameSession){
@@ -41,8 +41,11 @@ export class GameSessionController {
         if(gameSession.players.length >=8){
             throw new BadRequestException('Room is full')
         }
+        if(gameSession.gameState.lobbyPhase === false){
+            throw new BadRequestException('Game is in session')
+        }
         console.log('POST /game-sessions/join request accepted, New player is now in database ✔️')
-        return this.joinGameSessionService.joinGameSession(roomCode, playerDisplayName, randomImage);
+        return this.joinGameSessionService.joinGameSession(roomCode, playerDisplayName, randomImage, uid);
     }
 
     @Get('retrieve-all')

@@ -19,4 +19,5 @@ export class GameSessionDto {
     hostImage: string;
     roundTime: number;
     roundAmount: number;
+    hostUid: string;
 }
