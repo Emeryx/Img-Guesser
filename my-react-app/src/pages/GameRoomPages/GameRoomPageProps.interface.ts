@@ -1,8 +1,11 @@
 import { GameSession } from "../../interfaces/gamesession.interface";
+import { Player } from "../../interfaces/player.interface";
 interface GameRoomPageProps {
     gameSession: GameSession,
+    player: Player,
     display: string,
-    isLoading: boolean
+    isGameDataLoading: boolean,
+    isPlayerHost: boolean,
 }
 
 export default GameRoomPageProps;
