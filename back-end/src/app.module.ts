@@ -11,6 +11,7 @@ import { JoinGameSessionService } from './services/joinGameSession.service';
 import { PlayerNameValidationService } from './services/playerNameValidation.service';
 import { PlayerSocketGateway } from './gateways/player.gateway';
 import { PlayerUidValidation } from './services/playerUidValidation.service';
+import { RetrievePlayerService } from './services/retrievePlayer.service';
 dotenv.config();
 @Module({
   imports: [
@@ -27,6 +28,7 @@ dotenv.config();
     JoinGameSessionService,
     PlayerNameValidationService,
     PlayerUidValidation,
+    RetrievePlayerService,
     PlayerSocketGateway
   ],
 })

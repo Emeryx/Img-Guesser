@@ -9,6 +9,9 @@ import { JoinGameSessionService } from "src/services/joinGameSession.service";
 import { PlayerJoinDto } from "src/dto/playerJoin.dto";
 import { PlayerNameValidationService } from "src/services/playerNameValidation.service";
 import { PlayerUidValidation } from "src/services/playerUidValidation.service";
+import { Player } from "src/schemas/player.interface";
+import { RetrievePlayerDto } from "src/dto/retrievePlayer.dto";
+import { RetrievePlayerService } from "src/services/retrievePlayer.service";
 
 const currentDate = () => {
     const date = new Date().toTimeString().slice(0,8)
@@ -23,7 +26,8 @@ export class GameSessionController {
         private readonly retrieveOneGameSessionService: RetrieveOneGameSessionService,
         private readonly joinGameSessionService: JoinGameSessionService,
         private readonly playerNameValidationService: PlayerNameValidationService,
-        private readonly playerUidValidation: PlayerUidValidation
+        private readonly playerUidValidation: PlayerUidValidation,
+        private readonly retrievePlayerService: RetrievePlayerService,
     ) {}
 
     @Post('create') // A POST request to localhost:3000/game-sessions/create triggers this operation 
@@ -71,6 +75,13 @@ export class GameSessionController {
     async retrieveOneGameSession (@Query('roomCode') roomCode: string) : Promise<GameSession> {
         console.log(currentDate()+' GET /game-sessions/retrieve-one request received... ⏳')
         return this.retrieveOneGameSessionService.retrieveOneGameSession(roomCode);
+    }
+
+    @Get('retrieve-one-player')
+    async retrieveOnePlayer(@Query() retrievePlayerDto: RetrievePlayerDto): Promise<Player> {
+        const {uid, gameSession} = retrievePlayerDto;
+        console.log(currentDate()+' GET /game-sessions/retrieve-one-player request received... ⏳')
+        return this.retrievePlayerService.getPlayer(uid, gameSession);
     }
 
 }
