@@ -1,18 +1,24 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { GameSession } from "src/schemas/gamesession.interface";
 import { Player } from "src/schemas/player.interface";
 
 @Injectable()
 export class RetrievePlayerService {
     async getPlayer (uid: string, gameSession: GameSession): Promise<Player> {
-        const {players} = gameSession;
-        let playerObj: Player = null;
-        for(const player of players) {
-            if(player.uid === uid) {
-                playerObj=player;
+        try{
+            const {players} = gameSession;
+            let playerObj: Player = null;
+            for(const player of players) {
+                if(player.uid === uid) {
+                    playerObj=player;
+                }
             }
+            if(playerObj) return playerObj;
+            else throw new BadRequestException('Player not found')
         }
-        return playerObj;
+        catch(error){
+            console.error(error);
+        }
     }
 }

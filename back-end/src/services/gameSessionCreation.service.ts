@@ -21,7 +21,7 @@ export class GameCreationService {
     async createGameSession(hostName: string, hostImage: string, roundTime: number, roundAmount: number, hostUid: string): Promise<GameSession> { // The type Promise<GameSession> means that the method returns a promise that then resolves into a GameSession object. The use of an asynchronous function allows to do stuff in the mongoDB and catch potential errors easily
         const newGameSession = new this.gameSessionModel({
             roomCode: RoomCodeGenerator(),
-                players: [{uid: hostUid, name: hostName, image: hostImage, score: 0, ready: false, isHost: true}],
+                players: [{uid: hostUid, name: hostName, image: hostImage, score: 0, ready: true, isHost: true}],
                 roundTime: roundTime,
                 roundAmount: roundAmount,
                 currentRound: 0,

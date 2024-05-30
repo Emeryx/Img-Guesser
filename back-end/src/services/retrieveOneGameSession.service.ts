@@ -22,4 +22,23 @@ export class RetrieveOneGameSessionService {
             console.error(error);
         }
     }
+    async retrieveAndUpdatePlayerReadyState(roomCode: string, uid: string){
+        try{
+            console.log('Awooooooo')
+            const gameSession = await this.gameSessionModel.findOne({roomCode});
+            const players = gameSession.players;
+            players.forEach((player) => {
+                if(player.uid === uid){
+                    player.ready = !player.ready;
+                }
+            })
+            await gameSession.updateOne(
+                {$set: {players}}
+            )
+            await gameSession.save()
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
 }

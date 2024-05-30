@@ -28,7 +28,7 @@ const GameRoom: React.FC<GameSession> = () => {
     }
 
     const isPlayerHostFunction = async (player: Player | undefined): Promise<boolean> => {
-        console.log(player?.isHost as unknown === 'true')
+        // console.log(player?.isHost as unknown === 'true')
         return player?.isHost as unknown === 'true';
     }
 
@@ -36,7 +36,7 @@ const GameRoom: React.FC<GameSession> = () => {
         queryKey: ['gameRoomData'],
         queryFn: async () => {
             const {data: gameSession} = await axios.get('http://localhost:3000/game-sessions/retrieve-one', { params: { roomCode }});
-            console.log(gameSession)
+            // console.log(gameSession)
             if(!gameSession){
                 throw new Error('Invalid game room')
             }

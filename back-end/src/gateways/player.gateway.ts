@@ -1,12 +1,17 @@
 /* eslint-disable prettier/prettier */
 import { SubscribeMessage, WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
+import { RetrieveOneGameSessionService } from "src/services/retrieveOneGameSession.service";
+import { RetrievePlayerService } from "src/services/retrievePlayer.service";
+
 const currentDate = () => {
     const date = new Date().toTimeString().slice(0,8)
     return `[${date}]`
 }
 @WebSocketGateway({cors: {origin: "*"}})
 export class PlayerSocketGateway {
+
+    constructor(private readonly retrieveOneGameSessionService: RetrieveOneGameSessionService) {}
 
     @WebSocketServer() server: Server;
 
@@ -15,7 +20,7 @@ export class PlayerSocketGateway {
     async handleRoomJoinBoxpieThankYou(client: Socket, payload: {clientId: string; roomCode: string}){ // The received room code should already be valid
         console.log(`----------\n${currentDate()} Server received the client message connect-to-room... ⏳`)
         const {clientId, roomCode} = payload;
-        client.join(roomCode);
+        await client.join(roomCode);
         this.server.to(roomCode).emit('player-connected');
         console.log(`Client ${clientId} successfully joined ${roomCode} ✔️`);
     }
@@ -31,5 +36,14 @@ export class PlayerSocketGateway {
             }
         })
         console.log(`${currentDate()} Client ${clientId} successfully disconnected from all rooms ✔️`);
+    }
+
+    @SubscribeMessage('ready-up')
+    async handleReadyUp(client: Socket, payload: {clientId: string; roomCode: string}){
+        console.log(`----------\n${currentDate()} Server received the client message ready-up... ⏳`)
+        const {clientId, roomCode} = payload;
+        await this.retrieveOneGameSessionService.retrieveAndUpdatePlayerReadyState(roomCode, clientId);
+        this.server.to(roomCode).emit('player-ready');
+        console.log(`${currentDate()} Client ${clientId} successfully finished toggling their ready state ✔️`);
     }
 }

@@ -8,8 +8,11 @@ import GameRoomPageProps from './GameRoomPageProps.interface';
 import { client } from '../../assets/PlayerSocket';
 import { useQueryClient } from 'react-query';
 import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 // { name, image, isHost }
 const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, display, isGameDataLoading, isPlayerHost }) => {
+
+    const navigate = useNavigate()
 
     const queryClient = useQueryClient();
 
@@ -19,9 +22,12 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
             await queryClient.invalidateQueries(['gameRoomData'])
         }
 
+        const navigateToMainMenu = () => navigate('/')
+
         client.getSocket().on('player-connected', refetchGameRoomData)
-        client.getSocket().on('player-ready',refetchGameRoomData)
-        client.getSocket().on('player-left',refetchGameRoomData)
+        client.getSocket().on('player-ready', refetchGameRoomData)
+        client.getSocket().on('player-left', refetchGameRoomData)
+        client.getSocket().on('host-left', navigateToMainMenu)
 
         return () => {
             client.getSocket().removeListener('player-connected')
@@ -30,7 +36,13 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
         };
     })
 
-    console.log(player);
+    const playerReadyUp = () => {
+        client.handleReadyState(gameSession.roomCode);
+    }
+
+    const startGame = () => {
+        console.log('Peekaboo')
+    }
 
     return (
         <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8, display: display }}>
@@ -47,8 +59,8 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
                 }
             </Stack>
             <Stack sx={{ maxWidth: '1200px' }} direction={{ xs: 'column', md: 'row' }} flexWrap='wrap' justifyContent='center' alignItems='center' spacing={4} >
-                <Button color='success' size='lg' variant='solid'>
-                    {isPlayerHost?'Start!':'Ready up'} <Skeleton animation='wave' sx={{display:isPlayerHost==='loading'?'block':'none' ,position:'absolute', borderRadius: 'inherit', top:0, left:0}}></Skeleton>
+                <Button onClick={isPlayerHost?startGame:playerReadyUp} color='success' size='lg' variant='solid'>
+                    {isPlayerHost ? 'Start!' : 'Ready up'} <Skeleton animation='wave' sx={{ display: isPlayerHost === 'loading' ? 'block' : 'none', position: 'absolute', borderRadius: 'inherit', top: 0, left: 0 }}></Skeleton>
                 </Button>
                 <Button color='danger' size='lg' variant='solid'>
                     Leave

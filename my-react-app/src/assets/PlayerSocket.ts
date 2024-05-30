@@ -38,6 +38,11 @@ class PlayerSocket {
         this.socket.emit('leave-all-rooms', {clientId: this.clientId})
     }
 
+    handleReadyState(roomCode: string){
+        console.log('Client emitting ready-up...')
+        this.socket.emit('ready-up', {clientId: this.clientId, roomCode: roomCode})
+    }
+
     getSocket(){
         return this.socket;
     }
