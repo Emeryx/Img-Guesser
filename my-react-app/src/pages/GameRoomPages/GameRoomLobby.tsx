@@ -15,13 +15,16 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
 
     useEffect(() => {
 
-        client.getSocket().on('player-connected', async () => {
-            console.log("PLAYER CONNECTED!");
+        const refetchGameRoomData = async () => {
             await queryClient.invalidateQueries(['gameRoomData'])
-        })
+        }
+
+        client.getSocket().on('player-connected', refetchGameRoomData)
+        client.getSocket().on('player-ready',refetchGameRoomData)
 
         return () => {
             client.getSocket().removeListener('player-connected')
+            client.getSocket().removeListener('player-ready')
         };
     })
 
@@ -37,7 +40,7 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
             <Stack sx={{ py: 4, maxWidth: '1200px' }} direction={{ xs: 'column', md: 'row' }} flexWrap='wrap' justifyContent='center' alignItems='center' spacing={4} >
                 {
                     gameSession.players.map((player, index) => {
-                        return <PlayerContainer key={'Player' + index} name={player.name} image={player.image} isHost={player.isHost} score={player.score} ready={player.ready} />
+                        return <PlayerContainer key={'Player' + index} uid={player.uid} name={player.name} image={player.image} isHost={player.isHost} score={player.score} ready={player.ready} />
                     })
                 }
             </Stack>
