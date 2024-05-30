@@ -8,7 +8,15 @@ export class RetrieveOneGameSessionService {
     constructor(@InjectModel('GameSession') private gameSessionModel: Model<GameSession>) {} // The constructor is used to inject the mongoDB model
     async retrieveOneGameSession(roomCode: string) : Promise<GameSession> {
         try{
-            return this.gameSessionModel.findOne({roomCode});
+            return await this.gameSessionModel.findOne({roomCode});
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+    async retrieveAndDeleteOneGameSession(roomCode: string){
+        try{
+            return await this.gameSessionModel.findOneAndDelete({roomCode});
         }
         catch(error){
             console.error(error);

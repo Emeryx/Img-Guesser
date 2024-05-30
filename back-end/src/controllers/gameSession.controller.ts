@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Post, Body, Get, Query, BadRequestException } from "@nestjs/common";
+import { Controller, Post, Body, Get, Query, BadRequestException, Delete } from "@nestjs/common";
 import { GameCreationService } from "src/services/gameSessionCreation.service";
 import { GameSessionDto } from "src/dto/gameSession.dto";
 import { RetrieveGameSessionsService } from "src/services/retrieveGameSessions.service";
@@ -82,6 +82,12 @@ export class GameSessionController {
         const {uid, gameSession} = retrievePlayerDto;
         console.log(currentDate()+' GET /game-sessions/retrieve-one-player request received... ⏳')
         return this.retrievePlayerService.getPlayer(uid, gameSession);
+    }
+
+    @Delete('delete-one')
+    async deleteOneGameSession (@Query('roomCode') roomCode: string) {
+        console.log(currentDate()+' DELETE /game-sessions/delete-one request received... ⏳');
+        return await this.retrieveOneGameSessionService.retrieveAndDeleteOneGameSession(roomCode)
     }
 
 }
