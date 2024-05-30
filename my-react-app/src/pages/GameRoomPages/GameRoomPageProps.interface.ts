@@ -5,7 +5,7 @@ interface GameRoomPageProps {
     player: Player,
     display: string,
     isGameDataLoading: boolean,
-    isPlayerHost: boolean,
+    isPlayerHost: boolean | 'loading',
 }
 
 export default GameRoomPageProps;

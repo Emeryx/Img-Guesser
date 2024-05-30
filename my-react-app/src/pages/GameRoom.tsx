@@ -13,7 +13,7 @@ import { client } from '../assets/PlayerSocket';
 const GameRoom: React.FC<GameSession> = () => {
 
     const playerData = useRef<Player>();
-    const isPlayerHost = useRef<boolean>(false);
+    const isPlayerHost = useRef<boolean | 'loading'>('loading');
     const { roomCode } = useParams();
     
     const player = async () => {

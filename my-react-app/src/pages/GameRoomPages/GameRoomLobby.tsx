@@ -21,10 +21,12 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
 
         client.getSocket().on('player-connected', refetchGameRoomData)
         client.getSocket().on('player-ready',refetchGameRoomData)
+        client.getSocket().on('player-left',refetchGameRoomData)
 
         return () => {
             client.getSocket().removeListener('player-connected')
             client.getSocket().removeListener('player-ready')
+            // Client will not unsubscribe to player-left because players can leave mid game.
         };
     })
 
@@ -45,11 +47,8 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
                 }
             </Stack>
             <Stack sx={{ maxWidth: '1200px' }} direction={{ xs: 'column', md: 'row' }} flexWrap='wrap' justifyContent='center' alignItems='center' spacing={4} >
-                <Button sx={{display:isPlayerHost?'block':'none'}} color='success' size='lg' variant='solid'>
-                    Start! <Skeleton animation='pulse' sx={{display:isGameDataLoading?'block':'none' ,position:'absolute', borderRadius: 'inherit', top:0, left:0}}></Skeleton>
-                </Button>
-                <Button sx={{display:isPlayerHost?'none':'block'}} color='success' size='lg' variant='solid'>
-                    Ready up
+                <Button color='success' size='lg' variant='solid'>
+                    {isPlayerHost?'Start!':'Ready up'} <Skeleton animation='wave' sx={{display:isPlayerHost==='loading'?'block':'none' ,position:'absolute', borderRadius: 'inherit', top:0, left:0}}></Skeleton>
                 </Button>
                 <Button color='danger' size='lg' variant='solid'>
                     Leave
