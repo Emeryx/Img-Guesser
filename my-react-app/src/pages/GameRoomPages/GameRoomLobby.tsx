@@ -44,9 +44,17 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
                     })
                 }
             </Stack>
-            <Button sx={{display:isPlayerHost?'block':'none'}} color='neutral' size='lg' variant='solid'>
-                Start! <Skeleton animation='pulse' sx={{display:isGameDataLoading?'block':'none' ,position:'absolute', borderRadius: 'inherit', top:0, left:0}}></Skeleton>
-            </Button>
+            <Stack sx={{ maxWidth: '1200px' }} direction={{ xs: 'column', md: 'row' }} flexWrap='wrap' justifyContent='center' alignItems='center' spacing={4} >
+                <Button sx={{display:isPlayerHost?'block':'none'}} color='success' size='lg' variant='solid'>
+                    Start! <Skeleton animation='pulse' sx={{display:isGameDataLoading?'block':'none' ,position:'absolute', borderRadius: 'inherit', top:0, left:0}}></Skeleton>
+                </Button>
+                <Button sx={{display:isPlayerHost?'none':'block'}} color='success' size='lg' variant='solid'>
+                    Ready up
+                </Button>
+                <Button color='danger' size='lg' variant='solid'>
+                    Leave
+                </Button>
+            </Stack>
         </Stack>
     )
 }
