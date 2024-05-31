@@ -10,33 +10,34 @@ import { useQueryClient } from 'react-query';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // { name, image, isHost }
+let hasConnectedToRoom = false;
 const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, display, isGameDataLoading, isPlayerHost }) => {
 
     const navigate = useNavigate()
 
     const queryClient = useQueryClient();
 
+    const refetchPlayerData = async () => {
+        await queryClient.invalidateQueries(['gameRoomData'])
+    }
+
+    const navigateToMainMenu = () => navigate('/');
+
     useEffect(() => {
 
-        client.getSocket().on('host-left', () => {
-            navigate('/');
-        })
+        if(!hasConnectedToRoom){
+            client.handleJoinRoom(gameSession.roomCode)
+            hasConnectedToRoom=true;
+        }
 
-        client.getSocket().on('player-connected', async () => {
-            await queryClient.invalidateQueries(['gameRoomData'])
-        })
-
-        client.getSocket().on('player-left', async () => {
-            await queryClient.invalidateQueries(['gameRoomData'])
-        })
-
-        client.getSocket().on('player-ready', async () => {
-            await queryClient.invalidateQueries(['gameRoomData'])
-        })
+        client.getSocket().on('host-left', navigateToMainMenu)
+        client.getSocket().on('player-connected', refetchPlayerData)
+        client.getSocket().on('player-left', refetchPlayerData)
+        client.getSocket().on('player-ready', refetchPlayerData)
         
         return () => {
-            client.getSocket().removeListener('player-connected')
-            client.getSocket().removeListener('player-ready')
+            client.getSocket().off('player-connected')
+            client.getSocket().off('player-ready')
             // Client will not unsubscribe to player-left & host-left when the component unmounts because players can leave mid game.
         };
     })
