@@ -18,21 +18,26 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
 
     useEffect(() => {
 
-        const refetchGameRoomData = async () => {
+        client.getSocket().on('host-left', () => {
+            navigate('/');
+        })
+
+        client.getSocket().on('player-connected', async () => {
             await queryClient.invalidateQueries(['gameRoomData'])
-        }
+        })
 
-        const navigateToMainMenu = () => navigate('/')
+        client.getSocket().on('player-left', async () => {
+            await queryClient.invalidateQueries(['gameRoomData'])
+        })
 
-        client.getSocket().on('player-connected', refetchGameRoomData)
-        client.getSocket().on('player-ready', refetchGameRoomData)
-        client.getSocket().on('player-left', refetchGameRoomData)
-        client.getSocket().on('host-left', navigateToMainMenu)
-
+        client.getSocket().on('player-ready', async () => {
+            await queryClient.invalidateQueries(['gameRoomData'])
+        })
+        
         return () => {
             client.getSocket().removeListener('player-connected')
             client.getSocket().removeListener('player-ready')
-            // Client will not unsubscribe to player-left because players can leave mid game.
+            // Client will not unsubscribe to player-left & host-left when the component unmounts because players can leave mid game.
         };
     })
 

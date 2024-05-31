@@ -2,7 +2,6 @@
 import { SubscribeMessage, WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
 import { RetrieveOneGameSessionService } from "src/services/retrieveOneGameSession.service";
-import { RetrievePlayerService } from "src/services/retrievePlayer.service";
 
 const currentDate = () => {
     const date = new Date().toTimeString().slice(0,8)
