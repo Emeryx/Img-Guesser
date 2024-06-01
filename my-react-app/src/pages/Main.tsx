@@ -38,9 +38,9 @@ function Main() {
         }
     }
 
-    // useEffect(()=>{
-    //     client.handleLeaveRooms();
-    // },[])
+    useEffect(()=>{
+        client.handleLeaveRooms();
+    },[])
 
     return (
         <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8 }}>

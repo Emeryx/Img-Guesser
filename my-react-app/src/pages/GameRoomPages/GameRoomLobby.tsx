@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // { name, image, isHost }
 let hasConnectedToRoom = false;
+let hasAlerted = false;
 const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, display, isGameDataLoading, isPlayerHost }) => {
 
     const navigate = useNavigate()
@@ -30,7 +31,13 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
             hasConnectedToRoom=true;
         }
 
-        client.getSocket().on('host-left', navigateToMainMenu)
+        client.getSocket().on('host-left', () => {
+            if(!hasAlerted && !isPlayerHost){
+                alert('Host left the room')
+                hasAlerted = true;
+            }
+            navigateToMainMenu()
+        })
         client.getSocket().on('player-connected', refetchPlayerData)
         client.getSocket().on('player-left', refetchPlayerData)
         client.getSocket().on('player-ready', refetchPlayerData)
@@ -47,6 +54,9 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
         if(!isPlayerHost){
             client.handlePlayerLeaveGame(gameSession.roomCode);
             navigateToMainMenu();
+        }
+        else{
+            client.handleHostLeaveGame(gameSession.roomCode);
         }
     }
 

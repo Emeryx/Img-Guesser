@@ -58,4 +58,13 @@ export class PlayerSocketGateway {
         this.server.to(roomCode).emit('player-left');
         console.log(`${currentDate()} Client ${clientId} successfully left room ${roomCode} ✔️`);
     }
+
+    @SubscribeMessage('host-leave-game-room')
+    async handleHostLeaveRoom(client: Socket, payload: {clientId: string, roomCode: string}){
+        console.log(`----------\n${currentDate()} Server received the client message leave-game-room... ⏳`)
+        const {clientId, roomCode} = payload;
+        await this.leaveGameSessionService.hostLeaveGameSession(clientId, roomCode);
+        this.server.to(roomCode).emit('host-left');
+        console.log(`${currentDate()} Client ${clientId} successfully left room ${roomCode} as the host ✔️`);
+    }
 }

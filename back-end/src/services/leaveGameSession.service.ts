@@ -28,4 +28,14 @@ export class LeaveGameSessionService {
             console.error(error);
         }
     }
+    async hostLeaveGameSession(uid: string, roomCode: string): Promise<void> {
+        try{
+            const gameSession = await this.gameSessionModel.findOne({roomCode});
+            if(gameSession.players[0].uid !== uid) throw new Error('Permission denied')
+            else await gameSession.deleteOne();
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
 }
