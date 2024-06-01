@@ -43,6 +43,11 @@ class PlayerSocket {
         this.socket.emit('ready-up', {clientId: this.clientId, roomCode: roomCode})
     }
 
+    handlePlayerLeaveGame(roomCode: string){
+        console.log('Client emitting leave-game-room...')
+        this.socket.emit('leave-game-room', {clientId: this.clientId, roomCode: roomCode});
+    }
+
     getSocket(){
         return this.socket;
     }

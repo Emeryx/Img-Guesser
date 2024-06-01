@@ -2,6 +2,7 @@
 import { SubscribeMessage, WebSocketGateway, WebSocketServer} from "@nestjs/websockets";
 import { Server, Socket } from "socket.io";
 import { RetrieveOneGameSessionService } from "src/services/retrieveOneGameSession.service";
+import { LeaveGameSessionService } from "src/services/leaveGameSession.service";
 
 const currentDate = () => {
     const date = new Date().toTimeString().slice(0,8)
@@ -10,7 +11,9 @@ const currentDate = () => {
 @WebSocketGateway({cors: {origin: "*"}})
 export class PlayerSocketGateway {
 
-    constructor(private readonly retrieveOneGameSessionService: RetrieveOneGameSessionService) {}
+    constructor(private readonly retrieveOneGameSessionService: RetrieveOneGameSessionService,
+        private readonly leaveGameSessionService: LeaveGameSessionService,
+    ) {}
 
     @WebSocketServer() server: Server;
 
@@ -44,5 +47,15 @@ export class PlayerSocketGateway {
         await this.retrieveOneGameSessionService.retrieveAndUpdatePlayerReadyState(roomCode, clientId);
         this.server.to(roomCode).emit('player-ready');
         console.log(`${currentDate()} Client ${clientId} successfully finished toggling their ready state ✔️`);
+    }
+
+    @SubscribeMessage('leave-game-room')
+    async handleOneRoomLeave(client: Socket, payload: {clientId: string, roomCode: string}){
+        console.log(`----------\n${currentDate()} Server received the client message leave-game-room... ⏳`)
+        const {clientId, roomCode} = payload;
+        await this.leaveGameSessionService.leaveGameSession(clientId, roomCode);
+        client.leave(roomCode);
+        this.server.to(roomCode).emit('player-left');
+        console.log(`${currentDate()} Client ${clientId} successfully left room ${roomCode} ✔️`);
     }
 }

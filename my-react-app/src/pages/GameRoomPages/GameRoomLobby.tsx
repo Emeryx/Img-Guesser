@@ -38,9 +38,17 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
         return () => {
             client.getSocket().off('player-connected')
             client.getSocket().off('player-ready')
+            client.getSocket().off('player-left')
             // Client will not unsubscribe to player-left & host-left when the component unmounts because players can leave mid game.
         };
     })
+
+    const leaveGame = () => {
+        if(!isPlayerHost){
+            client.handlePlayerLeaveGame(gameSession.roomCode);
+            navigateToMainMenu();
+        }
+    }
 
     const playerReadyUp = () => {
         client.handleReadyState(gameSession.roomCode);
@@ -68,7 +76,7 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
                 <Button onClick={isPlayerHost?startGame:playerReadyUp} color='success' size='lg' variant='solid'>
                     {isPlayerHost ? 'Start!' : 'Ready up'} <Skeleton animation='wave' sx={{ display: isPlayerHost === 'loading' ? 'block' : 'none', position: 'absolute', borderRadius: 'inherit', top: 0, left: 0 }}></Skeleton>
                 </Button>
-                <Button color='danger' size='lg' variant='solid'>
+                <Button onClick={leaveGame} color='danger' size='lg' variant='solid'>
                     Leave
                 </Button>
             </Stack>

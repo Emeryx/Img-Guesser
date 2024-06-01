@@ -73,14 +73,14 @@ export class GameSessionController {
 
     @Get('retrieve-one')
     async retrieveOneGameSession (@Query('roomCode') roomCode: string) : Promise<GameSession> {
-        console.log(currentDate()+' GET /game-sessions/retrieve-one request received... ⏳')
+        // console.log(currentDate()+' GET /game-sessions/retrieve-one request received... ⏳')
         return this.retrieveOneGameSessionService.retrieveOneGameSession(roomCode);
     }
 
     @Get('retrieve-one-player')
     async retrieveOnePlayer(@Query() retrievePlayerDto: RetrievePlayerDto): Promise<Player> {
         const {uid, gameSession} = retrievePlayerDto;
-        console.log(currentDate()+' GET /game-sessions/retrieve-one-player request received... ⏳')
+        // console.log(currentDate()+' GET /game-sessions/retrieve-one-player request received... ⏳')
         return this.retrievePlayerService.getPlayer(uid, gameSession);
     }
 
@@ -89,5 +89,4 @@ export class GameSessionController {
         console.log(currentDate()+' DELETE /game-sessions/delete-one request received... ⏳');
         return await this.retrieveOneGameSessionService.retrieveAndDeleteOneGameSession(roomCode)
     }
-
 }
