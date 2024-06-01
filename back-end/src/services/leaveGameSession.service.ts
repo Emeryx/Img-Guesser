@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { GameSession } from "src/schemas/gamesession.schema";
@@ -31,7 +31,7 @@ export class LeaveGameSessionService {
     async hostLeaveGameSession(uid: string, roomCode: string): Promise<void> {
         try{
             const gameSession = await this.gameSessionModel.findOne({roomCode});
-            if(gameSession.players[0].uid !== uid) throw new Error('Permission denied')
+            if(gameSession.players[0].uid !== uid) throw new BadRequestException('Permission denied')
             else await gameSession.deleteOne();
         }
         catch(error){

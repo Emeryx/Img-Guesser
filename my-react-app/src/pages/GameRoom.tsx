@@ -3,27 +3,32 @@ import axios from 'axios';
 import { GameSession } from '../interfaces/gamesession.interface';
 import GameRoomLobby from './GameRoomPages/GameRoomLobby';
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Typography } from '@mui/joy';
 import styles from '../assets/MuiStyles';
 import { Suspense, useEffect, useRef } from 'react';
 const {subheaderFontSize} = styles;
 import { Player } from '../interfaces/player.interface';
 import { client } from '../assets/PlayerSocket';
+import { AxiosResponse } from 'axios';
 const GameRoom: React.FC<GameSession> = () => {
 
     const playerData = useRef<Player>();
     const isPlayerHost = useRef<boolean | 'loading'>('loading');
     const { roomCode } = useParams();
     
+    const navigate = useNavigate();
+
     const player = async () => {
         try{
-            const player: any = await axios.get('http://localhost:3000/game-sessions/retrieve-one-player', {params:{uid: client.getSocketId(), gameSession: gameSession}});
+            const player: AxiosResponse<any> = await axios.get('http://localhost:3000/game-sessions/retrieve-one-player', {params:{uid: client.getSocketId(), gameSession: gameSession}});
             return player.data;
         }
         catch(error: any){
+            console.log('DASILUTDAUIYTDS8YUFRSU8I')
             const errorMessage = error?.response?.data?.message;
-            console.log(errorMessage);
+            alert(errorMessage);
+            navigate('/')
         }
     }
 
@@ -32,16 +37,16 @@ const GameRoom: React.FC<GameSession> = () => {
         return player?.isHost as unknown === 'true';
     }
 
-    const {isLoading: isGameDataLoading, error, data: gameSession} = useQuery({
+    const {isLoading: isGameDataLoading, isError, data: gameSession} = useQuery({
         queryKey: ['gameRoomData'],
         queryFn: async () => {
             const {data: gameSession} = await axios.get('http://localhost:3000/game-sessions/retrieve-one', { params: { roomCode }});
-            // console.log(gameSession)
-            if(!gameSession){
-                throw new Error('Invalid game room')
-            }
             return gameSession;
-        }, suspense: true
+        }, retry: false,
+        onError: () => {
+            alert('Bad boy! Shoo!');
+            navigate('/')
+        }
     })
 
     useEffect(()=>{
@@ -57,15 +62,13 @@ const GameRoom: React.FC<GameSession> = () => {
         fetchPlayerData()
     })
 
-    if(error){
+    if(isError){
         return <Typography level='h3' fontSize={subheaderFontSize} >Invalid game room</Typography>
     }
 
-    else{
+    else if(gameSession){
         return (
-            <Suspense>
-                <GameRoomLobby gameSession={gameSession} player={playerData.current!} display={gameSession.gameState.lobbyPhase ? 'flex' : 'none'} isGameDataLoading={isGameDataLoading} isPlayerHost={isPlayerHost.current} />
-            </Suspense>
+            <GameRoomLobby gameSession={gameSession} player={playerData.current!} display={gameSession.gameState.lobbyPhase ? 'flex' : 'none'} isGameDataLoading={isGameDataLoading} isPlayerHost={isPlayerHost.current} />
         )
     }
 }

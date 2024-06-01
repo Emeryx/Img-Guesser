@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Injectable } from "@nestjs/common";
+import { BadRequestException, Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import { GameSession } from "src/schemas/gamesession.schema";
@@ -8,10 +8,12 @@ export class RetrieveOneGameSessionService {
     constructor(@InjectModel('GameSession') private gameSessionModel: Model<GameSession>) {} // The constructor is used to inject the mongoDB model
     async retrieveOneGameSession(roomCode: string) : Promise<GameSession> {
         try{
-            return await this.gameSessionModel.findOne({roomCode});
+            const gameSession = await this.gameSessionModel.findOne({roomCode});
+            if(gameSession) return gameSession;
+            else throw new BadRequestException('Game room not found')
         }
         catch(error){
-            console.error(error);
+            throw new BadRequestException('Game room not found')
         }
     }
     async retrieveAndDeleteOneGameSession(roomCode: string){
