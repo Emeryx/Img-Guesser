@@ -19,7 +19,7 @@ const GameRoom: React.FC<GameSession> = () => {
     
     const navigate = useNavigate();
 
-    const player = async () => {
+    const player = async (gameSession: GameSession) => {
         try{
             const player: AxiosResponse<any> = await axios.get('http://localhost:3000/game-sessions/retrieve-one-player', {params:{uid: client.getSocketId(), gameSession: gameSession}});
             return player.data;
@@ -41,25 +41,25 @@ const GameRoom: React.FC<GameSession> = () => {
         queryKey: ['gameRoomData'],
         queryFn: async () => {
             const {data: gameSession} = await axios.get('http://localhost:3000/game-sessions/retrieve-one', { params: { roomCode }});
+            playerData.current = await player(gameSession);
+            isPlayerHost.current = await isPlayerHostFunction(playerData.current);
             return gameSession;
         }, retry: false,
         onError: () => {
-            alert('Bad boy! Shoo!');
-            navigate('/')
         }
     })
 
     useEffect(()=>{
-        const fetchPlayerData = async () => {
-            try{
-                playerData.current = await player();
-                isPlayerHost.current = await isPlayerHostFunction(playerData.current);
-            }
-            catch(error){
-                console.log(error);
-            }
-        }
-        fetchPlayerData()
+        // const fetchPlayerData = async () => {
+        //     try{
+        //         playerData.current = await player();
+        //         isPlayerHost.current = await isPlayerHostFunction(playerData.current);
+        //     }
+        //     catch(error){
+        //         console.log(error);
+        //     }
+        // }
+        // fetchPlayerData()
     })
 
     if(isError){
@@ -70,6 +70,10 @@ const GameRoom: React.FC<GameSession> = () => {
         return (
             <GameRoomLobby gameSession={gameSession} player={playerData.current!} display={gameSession.gameState.lobbyPhase ? 'flex' : 'none'} isGameDataLoading={isGameDataLoading} isPlayerHost={isPlayerHost.current} />
         )
+    }
+
+    else if(isGameDataLoading){
+        return <Typography level='h3' fontSize={subheaderFontSize} >Loading...</Typography>
     }
 }
 export default GameRoom;
