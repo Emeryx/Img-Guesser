@@ -18,7 +18,7 @@ export class RetrievePlayerService {
             else throw new BadRequestException('Player not found')
         }
         catch(error){
-            console.error(error);
+            throw new BadRequestException('Player not found');
         }
     }
 }
