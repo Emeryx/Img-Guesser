@@ -19,7 +19,7 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
 
     const queryClient = useQueryClient();
 
-    const refetchPlayerData = async () => {
+    const refetchGameData = async () => {
         await queryClient.invalidateQueries(['gameRoomData'])
     }
 
@@ -39,14 +39,16 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
             }
             navigateToMainMenu()
         })
-        client.getSocket().on('player-connected', refetchPlayerData)
-        client.getSocket().on('player-left', refetchPlayerData)
-        client.getSocket().on('player-ready', refetchPlayerData)
+        client.getSocket().on('player-connected', refetchGameData)
+        client.getSocket().on('player-left', refetchGameData)
+        client.getSocket().on('player-ready', refetchGameData)
+        client.getSocket().on('game-started', refetchGameData)
         
         return () => {
             client.getSocket().off('player-connected')
             client.getSocket().off('player-ready')
             client.getSocket().off('player-left')
+            client.getSocket().off('game-started')
             // Client will not unsubscribe to player-left & host-left when the component unmounts because players can leave mid game.
         };
     })
@@ -66,7 +68,12 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
     }
 
     const startGame = async () => {
-        await axios.put('http://localhost:3000/game-sessions/start-game', null, { params: { roomCode: gameSession.roomCode }})
+        try{
+            client.handleStartGame(gameSession.roomCode);
+        }
+        catch(error){
+            console.error(error);
+        }
     }
 
     return (

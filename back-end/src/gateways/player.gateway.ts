@@ -3,6 +3,7 @@ import { SubscribeMessage, WebSocketGateway, WebSocketServer} from "@nestjs/webs
 import { Server, Socket } from "socket.io";
 import { RetrieveOneGameSessionService } from "src/services/retrieveOneGameSession.service";
 import { LeaveGameSessionService } from "src/services/leaveGameSession.service";
+import { GameHostFunctions } from "src/services/gameHostFunctions.service";
 
 const currentDate = () => {
     const date = new Date().toTimeString().slice(0,8)
@@ -13,6 +14,7 @@ export class PlayerSocketGateway {
 
     constructor(private readonly retrieveOneGameSessionService: RetrieveOneGameSessionService,
         private readonly leaveGameSessionService: LeaveGameSessionService,
+        private readonly gameHostFunctions: GameHostFunctions,
     ) {}
 
     @WebSocketServer() server: Server;
@@ -66,5 +68,14 @@ export class PlayerSocketGateway {
         await this.leaveGameSessionService.hostLeaveGameSession(clientId, roomCode);
         this.server.to(roomCode).emit('host-left');
         console.log(`${currentDate()} Client ${clientId} successfully left room ${roomCode} as the host ✔️`);
+    }
+
+    @SubscribeMessage('start-game')
+    async handleStartGame(client: Socket, payload: {clientId: string, roomCode: string}){
+        console.log(`----------\n${currentDate()} Server received the client message start-game... ⏳`)
+        const {clientId, roomCode} = payload;
+        await this.gameHostFunctions.startGame(clientId, roomCode);
+        this.server.to(roomCode).emit('game-started');
+        console.log(`${currentDate()} Client ${clientId} successfully started game ${roomCode} ✔️`);
     }
 }

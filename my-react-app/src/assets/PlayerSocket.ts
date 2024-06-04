@@ -53,6 +53,11 @@ class PlayerSocket {
         this.socket.emit('host-leave-game-room',{clientId: this.clientId, roomCode: roomCode})
     }
 
+    handleStartGame(roomCode: string){
+        console.log('Client emitting start-game...')
+        this.socket.emit('start-game', {clientId: this.clientId, roomCode: roomCode})
+    }
+
     getSocket(){
         return this.socket;
     }

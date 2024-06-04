@@ -7,7 +7,7 @@ import { Model } from "mongoose";
 @Injectable()
 export class GameHostFunctions {
     constructor(@InjectModel('GameSession') private gameSessionModel: Model<GameSession>) {}
-    async startGame(roomCode: string) {
+    async startGame(uid: string, roomCode: string) {
         const gameSession = await this.gameSessionModel.findOne({roomCode});
         const newGameState = {
             paused: false,
