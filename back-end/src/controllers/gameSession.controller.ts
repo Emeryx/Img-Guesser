@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Post, Body, Get, Query, BadRequestException, Delete } from "@nestjs/common";
+import { Controller, Post, Body, Get, Query, BadRequestException, Delete, Put } from "@nestjs/common";
 import { GameCreationService } from "src/services/gameSessionCreation.service";
 import { GameSessionDto } from "src/dto/gameSession.dto";
 import { RetrieveGameSessionsService } from "src/services/retrieveGameSessions.service";
@@ -12,6 +12,7 @@ import { PlayerUidValidation } from "src/services/playerUidValidation.service";
 import { Player } from "src/schemas/player.interface";
 import { RetrievePlayerDto } from "src/dto/retrievePlayer.dto";
 import { RetrievePlayerService } from "src/services/retrievePlayer.service";
+import { GameHostFunctions } from "src/services/gameHostFunctions.service";
 
 const currentDate = () => {
     const date = new Date().toTimeString().slice(0,8)
@@ -28,6 +29,7 @@ export class GameSessionController {
         private readonly playerNameValidationService: PlayerNameValidationService,
         private readonly playerUidValidation: PlayerUidValidation,
         private readonly retrievePlayerService: RetrievePlayerService,
+        private readonly gameHostFunctions: GameHostFunctions
     ) {}
 
     @Post('create') // A POST request to localhost:3000/game-sessions/create triggers this operation 
@@ -88,5 +90,11 @@ export class GameSessionController {
     async deleteOneGameSession (@Query('roomCode') roomCode: string) {
         console.log(currentDate()+' DELETE /game-sessions/delete-one request received... ⏳');
         return await this.retrieveOneGameSessionService.retrieveAndDeleteOneGameSession(roomCode)
+    }
+
+    @Put('start-game')
+    async startGameSession (@Query('roomCode') roomCode: string) {
+        console.log(currentDate()+' PUT /game-sessions/start-game request received... ⏳');
+        return await this.gameHostFunctions.startGame(roomCode);
     }
 }

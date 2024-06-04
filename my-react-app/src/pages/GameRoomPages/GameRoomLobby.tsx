@@ -9,6 +9,7 @@ import { client } from '../../assets/PlayerSocket';
 import { useQueryClient } from 'react-query';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 // { name, image, isHost }
 let hasConnectedToRoom = false;
 let hasAlerted = false;
@@ -64,8 +65,8 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
         client.handleReadyState(gameSession.roomCode);
     }
 
-    const startGame = () => {
-        console.log('Peekaboo')
+    const startGame = async () => {
+        await axios.put('http://localhost:3000/game-sessions/start-game', null, { params: { roomCode: gameSession.roomCode }})
     }
 
     return (

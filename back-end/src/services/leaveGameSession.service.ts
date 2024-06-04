@@ -21,7 +21,7 @@ export class LeaveGameSessionService {
                 await gameSession.updateOne(
                     {$set: {players}}
                 )
-                await gameSession.save();
+                // await gameSession.save();
             }
         }
         catch(error){

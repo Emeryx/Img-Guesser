@@ -2,6 +2,7 @@
 import axios from 'axios';
 import { GameSession } from '../interfaces/gamesession.interface';
 import GameRoomLobby from './GameRoomPages/GameRoomLobby';
+import GameRoomRound from './GameRoomPages/GameRoomRound';
 import { useQuery } from 'react-query';
 import { useNavigate, useParams } from 'react-router-dom';
 import { Typography } from '@mui/joy';
@@ -40,9 +41,21 @@ const GameRoom: React.FC<GameSession> = () => {
     })
 
     if(gameSession){
-        return (
-            <GameRoomLobby gameSession={gameSession} player={playerData.current!} display={gameSession.gameState.lobbyPhase ? 'flex' : 'none'} isGameDataLoading={isGameDataLoading} isPlayerHost={isPlayerHost.current} />
-        )
+        if(gameSession.gameState.lobbyPhase){
+            return(
+                <GameRoomLobby gameSession={gameSession} player={playerData.current!} display={gameSession.gameState.lobbyPhase ? 'flex' : 'none'} isGameDataLoading={isGameDataLoading} isPlayerHost={isPlayerHost.current} />
+            )
+        }
+        else if(gameSession.gameState.gamePhase){
+            return (
+                <GameRoomRound gameSession={gameSession} player={playerData.current!} display={gameSession.gameState.gamePhase === true ? 'flex' : 'none'} isGameDataLoading={isGameDataLoading} isPlayerHost={isPlayerHost.current} />
+            )
+        }
+        else{
+            return (
+                <Typography level='h3' fontSize={subheaderFontSize} >Error</Typography>
+            )
+        }
     }
 
     else if(isGameDataLoading || isError){
