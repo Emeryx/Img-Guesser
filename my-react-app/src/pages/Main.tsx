@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import RandomIconGenerator from '../assets/RandomIconGenerator';
 import { client } from '../assets/PlayerSocket';
+
 interface nameErrorDisplayProps {
     display: string,
     errorMessage: string
@@ -43,18 +44,18 @@ function Main() {
     },[])
 
     return (
-        <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8 }}>
+        <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8, backgroundColor: 'custom.background' }}>
             {/*  Header */}
-            <Typography level='h1' fontSize={headerFontSize} sx={{ pb: 4 }} >Img Guesser</Typography>
+            <Typography level='h1' fontSize={headerFontSize} sx={{ pb: 4 }} textColor='custom.primary'>Img Guesser</Typography>
             {/*  Joining user input */}
-            <Typography level='h4' fontSize='1.25rem' >Join a game</Typography>
+            <Typography level='h4' fontSize='1.25rem' textColor='custom.secondary'>Join a game</Typography>
             <Stack direction={{ xs: 'column', md: 'row' }} justifyContent='center' alignItems='center' spacing={4} >
                 <Stack direction='column' justifyContent='center' alignItems='center' spacing={2}>
-                    <Typography level='h3' fontSize={subheaderFontSize} >Display Name</Typography>
+                    <Typography level='h3' fontSize={subheaderFontSize} textColor='custom.primary'>Display Name</Typography>
                     <Input value={playerDisplayName} onChange={(event) => setPlayerDisplayName(event.target.value)} size="md" color="neutral" variant="outlined" placeholder="Enter display name" />
                 </Stack>
                 <Stack direction='column' justifyContent='center' alignItems='center' spacing={2}>
-                    <Typography level='h3' fontSize={subheaderFontSize} >Room Code</Typography>
+                    <Typography level='h3' fontSize={subheaderFontSize} textColor='custom.primary'>Room Code</Typography>
                     <Input value={roomCode} onChange={(event) =>{
                         const newCharacter: string = event.target.value.charAt(event.target.value.length - 1);
                         if(!isNaN(parseFloat(newCharacter)) || event.target.value.length > 4) return;

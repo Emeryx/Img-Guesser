@@ -19,6 +19,19 @@ const theme = extendTheme({
     h4: {
       letterSpacing: 0.25
     }
+  },
+  colorSchemes: {
+    light: { // I put light even though the BG is dark because there is only dark mode, The default mode is light and to change it I have to clean localStorage which is too much of a hassle to do while I develop the backend that relies on localStorage
+      palette:  {
+        custom: {
+          primary: '#003F88',
+          secondary: '#00509D',
+          background: '#FCFCFF',
+          accent: '#FFD500',
+          error: '#FF3E3E'
+        }
+      }
+    }
   }
 })
 
