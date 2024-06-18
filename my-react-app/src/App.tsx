@@ -31,7 +31,7 @@ const theme = extendTheme({
           error: '#FF3E3E'
         },
         warning: {
-          solidColor: '#000',
+          solidColor: '#FFF',
           solidBg: '#ffc107',
           solidBorder: '#ffc107',
           solidHoverBg: '#ffca2c',
@@ -51,6 +51,9 @@ const theme = extendTheme({
           solidDisabledBg: '#0d6efd',
           solidDisabledBorder: '#0d6efd',
         },
+        background: {
+          tooltip: '#0d6efd' // For slider value label
+        }
       }
     }
   }
