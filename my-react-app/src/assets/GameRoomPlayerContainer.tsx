@@ -14,7 +14,7 @@ const PlayerContainer: React.FC<Player> = ({ uid, name, image, isHost, score, re
             <Stack direction='column' justifyContent='center' alignItems='center' spacing={2}>
                 <img src={image} style={{width: '128px', height: '128px', objectFit: 'cover', borderRadius: '50%'}} />
                 <Stack direction='row' justifyContent='center' alignItems='center' spacing={2}>
-                    <Typography sx={{color:uid===client.getSocketId()?'primary.500':'black'}} level='h3' fontSize={subheaderFontSize} >{name}</Typography>
+                    <Typography sx={{color:uid===client.getSocketId()?'custom.primary':'custom.secondary'}} level='h3' fontSize={subheaderFontSize} >{name}</Typography>
                     <img src={hostIcon} style={{ display: isHost ? 'block' : 'none', fill:'primary.500', width: '32px', height: '32px' }} /> {/* Display crown icon only if player is the owner of the game */}
                     <img src={thumbsUp} style={{ display: !isHost&&ready===true ? 'block' : 'none', fill:'primary.500', width: '24px', height: '24px' }} /> {/* Display crown icon only if player is the owner of the game */}
                 </Stack>

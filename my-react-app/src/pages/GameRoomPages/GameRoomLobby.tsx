@@ -79,10 +79,10 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
     return (
         <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8, display: display }}>
             {/*  Header */}
-            <Typography level='h1' fontSize={headerFontSize} sx={{ pb: 4 }} >Img Guesser</Typography>
+            <Typography textColor='custom.primary' level='h1' fontSize={headerFontSize} sx={{ pb: 4 }} >Img Guesser</Typography>
             {/*  Joining user input */}
-            <Typography level='h4' fontSize='1.25rem' >Waiting for players...</Typography>
-            <Typography level='h3' fontSize={subheaderFontSize} >Room Code: {gameSession.roomCode}</Typography>
+            <Typography textColor='custom.secondary' level='h4' fontSize='1.25rem' >Waiting for players...</Typography>
+            <Typography textColor='custom.secondary' level='h3' fontSize={subheaderFontSize} >Room Code: <Typography textColor='custom.primary'>{gameSession.roomCode}</Typography></Typography>
             <Stack sx={{ py: 4, maxWidth: '1200px' }} direction={{ xs: 'column', md: 'row' }} flexWrap='wrap' justifyContent='center' alignItems='center' spacing={4} >
                 {
                     gameSession.players.map((player, index) => {
