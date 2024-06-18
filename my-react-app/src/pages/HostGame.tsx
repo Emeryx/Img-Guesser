@@ -15,6 +15,8 @@ interface nameErrorDisplayProps {
 const HostGame = () => {
     const navigate = useNavigate();
     
+    const goToMainMenu = () => navigate('/');
+
     const startGame = async () => {
         try {
             const { data: gameSession } = await axios.post('http://localhost:3000/game-sessions/create', {hostName: ownerDisplayName, hostImage: RandomIconGenerator(), roundTime: timePerRound, roundAmount: rounds, hostUid: client.getSocketId()})
@@ -43,6 +45,7 @@ const HostGame = () => {
 
     return (
         <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8 }}>
+            <Button onClick={goToMainMenu} color='danger' sx={{position: "absolute", top: 94, left: 94}}>X</Button>
             {/*  Header */}
             <Typography textColor='custom.primary' level='h1' fontSize={headerFontSize} sx={{ pb: 4 }} >Img Guesser</Typography>
 
