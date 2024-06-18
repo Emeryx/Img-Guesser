@@ -24,12 +24,33 @@ const theme = extendTheme({
     light: { // I put light even though the BG is dark because there is only dark mode, The default mode is light and to change it I have to clean localStorage which is too much of a hassle to do while I develop the backend that relies on localStorage
       palette:  {
         custom: {
-          primary: '#003F88',
-          secondary: '#00509D',
+          primary: '#ffc107',
+          secondary: '#FCFCFF',
           background: '#FCFCFF',
           accent: '#FFD500',
           error: '#FF3E3E'
-        }
+        },
+        warning: {
+          solidColor: '#000',
+          solidBg: '#ffc107',
+          solidBorder: '#ffc107',
+          solidHoverBg: '#ffca2c',
+          solidHoverBorder: '#ffc720',
+          solidActiveBg: '#ffcd39',
+          solidActiveBorder: '#ffc720',
+          solidDisabledBg: '#ffc107',
+          solidDisabledBorder: '#ffc107',
+        },
+        primary: {
+          solidBg: '#0d6efd',
+          solidBorder: '#0d6efd',
+          solidHoverBg: '#0b5ed7',
+          solidHoverBorder: '#0a58ca',
+          solidActiveBg: '#0a58ca',
+          solidActiveBorder: '#0a53be',
+          solidDisabledBg: '#0d6efd',
+          solidDisabledBorder: '#0d6efd',
+        },
       }
     }
   }

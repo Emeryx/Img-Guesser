@@ -44,7 +44,7 @@ function Main() {
     },[])
 
     return (
-        <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8, backgroundColor: 'custom.background' }}>
+        <Stack direction='column' justifyContent='center' alignItems='center' spacing={4} sx={{ m: 8 }}>
             {/*  Header */}
             <Typography level='h1' fontSize={headerFontSize} sx={{ pb: 4 }} textColor='custom.primary'>Img Guesser</Typography>
             {/*  Joining user input */}
@@ -63,11 +63,11 @@ function Main() {
                     } size="md" color="neutral" variant="outlined" placeholder="Enter room code" />
                 </Stack>
             </Stack>
-            <Typography level='h4' fontSize='1.25rem' sx={{display:nameErrorDisplay.display}} >{nameErrorDisplay.errorMessage}</Typography>
-            <Button onClick={joinGame} color='neutral' size='lg' variant='solid'>Play!</Button>
+            <Typography level='h4' fontSize='1.25rem' sx={{display:nameErrorDisplay.display, color:'custom.error'}} >{nameErrorDisplay.errorMessage}</Typography>
+            <Button onClick={joinGame} color='primary' size='lg' variant='solid'>Play!</Button>
             {/*  Button to create a game */}
-            <Typography level='h4' fontSize='1.25rem' sx={{ pt: 2 }}>Or alternatively...</Typography>
-            <Button color='neutral' size='lg' variant='solid' onClick={goToHostGame}>Host a game</Button>
+            <Typography level='h4' textColor='custom.secondary' fontSize='1.25rem' sx={{ pt: 2 }}>Or alternatively...</Typography>
+            <Button color='primary' size='lg' variant='solid' onClick={goToHostGame}>Host a game</Button>
         </Stack>
     )
 }
