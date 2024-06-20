@@ -9,7 +9,7 @@ import { client } from '../../assets/PlayerSocket';
 import { useQueryClient } from 'react-query';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
+import { Player } from '../../interfaces/player.interface';
 // { name, image, isHost }
 let hasConnectedToRoom = false;
 let hasAlerted = false;
@@ -52,6 +52,10 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
             // Client will not unsubscribe to player-left & host-left when the component unmounts because players can leave mid game.
         };
     })
+
+    const areEveryoneReady = (players: Player[]) => {
+        return players.every((player)=> player.ready === true)
+    }
 
     const leaveGame = () => {
         if(!isPlayerHost){
@@ -96,7 +100,7 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
                 }
             </Stack>
             <Stack sx={{ maxWidth: '1200px' }} direction={{ xs: 'column', md: 'row' }} flexWrap='wrap' justifyContent='center' alignItems='center' spacing={4} >
-                <Button onClick={isPlayerHost?startGame:playerReadyUp} color='success' size='lg' variant='solid'>
+                <Button onClick={isPlayerHost?startGame:playerReadyUp} disabled={(isPlayerHost && !areEveryoneReady(gameSession.players))? true:false} color='success' size='lg' variant='solid'>
                     {isPlayerHost ? 'Start!' : 'Ready up'} <Skeleton animation='wave' sx={{ display: isPlayerHost === 'loading' ? 'block' : 'none', position: 'absolute', borderRadius: 'inherit', top: 0, left: 0 }}></Skeleton>
                 </Button>
                 <Button onClick={leaveGame} color='danger' size='lg' variant='solid'>
