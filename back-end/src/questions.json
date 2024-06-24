@@ -1,0 +1,154 @@
+{
+    "questions": [
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Jaguar_%28Panthera_onca_palustris%29_male_Rio_Negro.JPG",
+          "correctAnswer": 1,
+          "answers": ["Panthera leo", "Panthera onca", "Panthera tigris", "Felis catus"]
+        },
+        {
+          "imgUrl": "https://cdn.britannica.com/60/161460-050-1DCDE098/Florida-manatee-swimming-Crystal-River-National-Wildlife.jpg",
+          "correctAnswer": 2,
+          "answers": ["Elephas maximus", "Loxodonta africana", "Trichechus manatus", "Balaenoptera musculus"]
+        },
+        {
+          "imgUrl": "https://cdn.britannica.com/79/20279-050-ECDF21A7/mountain-gorilla-Virunga-National-Park-Democratic-Republic.jpg",
+          "correctAnswer": 0,
+          "answers": ["Gorilla beringei", "Pongo pygmaeus", "Pan troglodytes", "Homo sapiens"]
+        },
+        {
+          "imgUrl": "https://www.thoughtco.com/thmb/FcM6FJ1e6wrimHA7zTdAArfRwjw=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc()/polar-bear-150005875-5c4db42046e0fb0001a8e7b8.jpg",
+          "correctAnswer": 2,
+          "answers": ["Ailuropoda melanoleuca", "Ursus arctos", "Ursus maritimus", "Procyon lotor"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/c/cc/Nandu_Rhea_americana_Tierpark_Hellabrunn-1.jpg",
+          "correctAnswer": 1,
+          "answers": ["Struthio camelus", "Rhea americana", "Dromaius novaehollandiae", "Gallus gallus"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fc/Leatherback_sea_turtle_Tinglar%2C_USVI_%285839996547%29.jpg",
+          "correctAnswer": 2,
+          "answers": ["Chelonia mydas", "Eretmochelys imbricata", "Dermochelys coriacea", "Caretta caretta"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/Equus_ferus_caballus_001.JPG",
+          "correctAnswer": 0,
+          "answers": ["Equus ferus caballus", "Equus zebra", "Equus quagga", "Equus grevyi"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Short-beaked_echidna_%28Tachyglossus_aculeatus_setosus%29_Scottsdale.jpg",
+          "correctAnswer": 1,
+          "answers": ["Ornithorhynchus anatinus", "Tachyglossus aculeatus", "Didelphis virginiana", "Vombatus ursinus"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/7/75/Dendrolagus_goodfellowi_-Melbourne_Zoo%2C_Australia-8a.jpg",
+          "correctAnswer": 2,
+          "answers": ["Phascolarctos cinereus", "Macropus rufus", "Dendrolagus goodfellowi", "Sarcophilus harrisii"]
+        },
+        {
+          "imgUrl": "https://cdn.britannica.com/45/125545-050-B705597E/Coyote.jpg",
+          "correctAnswer": 1,
+          "answers": ["Canis lupus", "Canis latrans", "Canis aureus", "Vulpes vulpes"]
+        },
+        {
+          "imgUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/190781322/original.jpg",
+          "correctAnswer": 0,
+          "answers": ["Phoca vitulina", "Halichoerus grypus", "Erignathus barbatus", "Leptonychotes weddellii"]
+        },
+        {
+          "imgUrl": "https://cff2.earth.com/uploads/2022/09/10143509/Sperm-whale_Physeter-macrocephalus_4medium.jpg",
+          "correctAnswer": 2,
+          "answers": ["Balaenoptera musculus", "Megaptera novaeangliae", "Physeter macrocephalus", "Eubalaena australis"]
+        },
+        {
+          "imgUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/4971507/original.jpg",
+          "correctAnswer": 2,
+          "answers": ["Delphinus delphis", "Tursiops truncatus", "Lagenorhynchus obscurus", "Orcinus orca"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/1/1f/Buteo_jamaicensis_jamaicensis%28face%29.jpg",
+          "correctAnswer": 3,
+          "answers": ["Haliaeetus leucocephalus", "Aquila chrysaetos", "Pandion haliaetus", "Buteo jamaicensis"]
+        },
+        {
+          "imgUrl": "https://i.natgeofe.com/k/68424626-f7d0-4275-8d50-0450b5800563/peregrine-falcon-wings-extended_4x3.jpg",
+          "correctAnswer": 0,
+          "answers": ["Falco peregrinus", "Falco columbarius", "Falco rusticolus", "Falco tinnunculus"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Amazona_aestiva_%28x3%29-8a.jpg",
+          "correctAnswer": 3,
+          "answers": ["Ara macao", "Anodorhynchus hyacinthinus", "Cyanopsitta spixii", "Amazona aestiva"]
+        },
+        {
+          "imgUrl": "https://frogsandco.com/wp-content/uploads/caresheet_dendrobates_tinctorius_11-scaled.jpg",
+          "correctAnswer": 0,
+          "answers": ["Dendrobates tinctorius", "Oophaga pumilio", "Phyllobates terribilis", "Mantella aurantiaca"]
+        },
+        {
+          "imgUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/170874060/original.jpg",
+          "correctAnswer": 3,
+          "answers": ["Ambystoma mexicanum", "Pleurodeles waltl", "Notophthalmus viridescens", "Triturus cristatus"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Great_White_Shark_%2814730719119%29.jpg",
+          "correctAnswer": 0,
+          "answers": ["Carcharodon carcharias", "Galeocerdo cuvier", "Rhincodon typus", "Sphyrna mokarran"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/d/df/Caiman_crocodilus_llanos.JPG",
+          "correctAnswer": 3,
+          "answers": ["Crocodylus porosus", "Alligator mississippiensis", "Gavialis gangeticus", "Caiman crocodilus"]
+        },
+        {
+          "imgUrl": "https://www.fishi-pedia.com/wp-content/uploads/2022/06/Hippocampus-erectus.jpg",
+          "correctAnswer": 0,
+          "answers": ["Hippocampus erectus", "Syngnathus acus", "Phycodurus eques", "Solenostomus paradoxus"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e9/Noerdlicher-Kammmolch-triturus-cristatus.jpg/1280px-Noerdlicher-Kammmolch-triturus-cristatus.jpg",
+          "correctAnswer": 3,
+          "answers": ["Ambystoma mexicanum", "Pleurodeles waltl", "Notophthalmus viridescens", "Triturus cristatus"]
+        },
+        {
+          "imgUrl": "https://www.ross.no/wp-content/2019/10/20191021-DSC_6088-1-4.5-scaled.jpg",
+          "correctAnswer": 3,
+          "answers": ["Lynx lynx", "Panthera onca", "Panthera pardus", "Acinonyx jubatus"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c8/Face_by_the_Mantled_guereza.jpg",
+          "correctAnswer": 3,
+          "answers": ["Papio anubis", "Mandrillus sphinx", "Macaca mulatta", "Colobus guereza"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/3/37/Killerwhales_jumping.jpg",
+          "correctAnswer": 0,
+          "answers": ["Orcinus orca", "Balaenoptera musculus", "Physeter macrocephalus", "Megaptera novaeangliae"]
+        },
+        {
+          "imgUrl": "https://www.ross.no/wp-content/2016/07/20160728-DSC_8901-1-4.0-scaled.jpg",
+          "correctAnswer": 0,
+          "answers": ["Odobenus rosmarus", "Phoca vitulina", "Leptonychotes weddellii", "Halichoerus grypus"]
+        },
+        {
+          "imgUrl": "https://cdn.britannica.com/80/234980-050-71EC7DC3/dugong-Dugong-dugon.jpg",
+          "correctAnswer": 1,
+          "answers": ["Trichechus manatus", "Dugong dugon", "Hydrodamalis gigas", "Siren lacertina"]
+        },
+        {
+          "imgUrl": "https://inaturalist-open-data.s3.amazonaws.com/photos/162756048/original.jpg",
+          "correctAnswer": 3,
+          "answers": ["Gallus gallus", "Anas platyrhynchos", "Coturnix coturnix", "Meleagris gallopavo"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Sheep_%28Ovis_aries%29_%288124796784%29.jpg/2560px-Sheep_%28Ovis_aries%29_%288124796784%29.jpg",
+          "correctAnswer": 3,
+          "answers": ["Sus scrofa domesticus", "Bos taurus", "Capra aegagrus hircus", "Ovis aries"]
+        },
+        {
+          "imgUrl": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Wild_rabbit_us.jpg",
+          "correctAnswer": 2,
+          "answers": ["Oryctolagus cuniculus", "Lepus europaeus", "Sylvilagus floridanus", "Nesolagus netscheri"]
+        }
+      ]
+}
