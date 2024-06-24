@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from "@mui/joy";
+import { Box, Button, Stack, Typography } from "@mui/joy";
 import GameRoomPageProps from "./GameRoomPageProps.interface";
 import coyote from '../../assets/question_images/Coyote.webp'
 import styles from "../../assets/MuiStyles";
@@ -11,6 +11,12 @@ const GameRoomRound: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
             <Box height={{ xs: 400 ,md: 500, lg: 500 }} width={{ md: '100%', lg: 1000, xl: 1400 }}>
                 <img src={coyote} width='100%' height='100%' style={{objectFit: 'cover'}} />
             </Box>
+            <Stack width={{ md: '100%', lg: 1000, xl: 1400 }} direction='row' flexWrap='wrap' spacing={0} justifyContent='center' alignContent='center'>
+                <Button size='lg' sx={{width: '50%', height:100, fontSize:subheaderFontSize}}>Canis lupus</Button>
+                <Button size='lg' sx={{width: '50%', height:100, fontSize:subheaderFontSize}} color='success'>Canis latrans</Button>
+                <Button size='lg' sx={{width: '50%', height:100, fontSize:subheaderFontSize}} color='danger'>Canis aureus</Button>
+                <Button size='lg' sx={{width: '50%', height:100, fontSize:subheaderFontSize}} color='warning'>Canis lupus familiaris</Button>
+            </Stack>
         </Stack>
     )
 }
