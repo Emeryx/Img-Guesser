@@ -12,10 +12,10 @@ const GameRoomRound: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
                 <img src={coyote} width='100%' height='100%' style={{objectFit: 'cover'}} />
             </Box>
             <Stack width={{ md: '100%', lg: 1000, xl: 1400 }} direction='row' flexWrap='wrap' spacing={0} justifyContent='center' alignContent='center'>
-                <Button size='lg' sx={{width: '50%', height:100, fontSize:subheaderFontSize}}>Canis lupus</Button>
-                <Button size='lg' sx={{width: '50%', height:100, fontSize:subheaderFontSize}} color='success'>Canis latrans</Button>
-                <Button size='lg' sx={{width: '50%', height:100, fontSize:subheaderFontSize}} color='danger'>Canis aureus</Button>
-                <Button size='lg' sx={{width: '50%', height:100, fontSize:subheaderFontSize}} color='warning'>Canis lupus familiaris</Button>
+                <Button size='lg' sx={{width: '50%', height:100, fontSize:{xs:'1.5rem', md:'1.75rem'}}}>Canis lupus</Button>
+                <Button size='lg' sx={{width: '50%', height:100, fontSize:{xs:'1.5rem', md:'1.75rem'}}} color='success'>Canis latrans</Button>
+                <Button size='lg' sx={{width: '50%', height:100, fontSize:{xs:'1.5rem', md:'1.75rem'}}} color='danger'>Canis aureus</Button>
+                <Button size='lg' sx={{width: '50%', height:100, fontSize:{xs:'1.5rem', md:'1.75rem'}}} color='warning'>Canis lupus familiaris</Button>
             </Stack>
         </Stack>
     )
