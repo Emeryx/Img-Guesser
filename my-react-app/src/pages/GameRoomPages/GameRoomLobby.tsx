@@ -87,7 +87,7 @@ const GameRoomLobby: React.FC<GameRoomPageProps> = ({ gameSession, player, displ
             {/*  Joining user input */}
             <Typography textColor='custom.secondary' level='h4' fontSize='1.25rem' >Waiting for players...</Typography>
             <Typography textColor='custom.secondary' level='h3' fontSize={subheaderFontSize} >Room Code: <Typography textColor='custom.primary'>{gameSession.roomCode}</Typography></Typography>
-            <Stack sx={{ maxWidth: '1200px' }} direction={{ xs: 'column', md: 'row' }} flexWrap='wrap' justifyContent='center' alignItems='center' spacing={2} >
+            <Stack sx={{ maxWidth: '1200px' }} direction='row' flexWrap='wrap' justifyContent='center' alignItems='center' spacing={2} >
                 <Typography textColor='custom.secondary' level='h4' fontSize='1.25rem' >Rounds: <Typography textColor='custom.primary'>{gameSession.roundAmount}</Typography></Typography>
                 <Typography textColor='custom.secondary' level='h4' fontSize='1.25rem' >|</Typography>
                 <Typography textColor='custom.secondary' level='h4' fontSize='1.25rem' >Time per round: <Typography textColor='custom.primary'>{gameSession.roundTime}</Typography></Typography>
